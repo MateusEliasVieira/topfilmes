@@ -22,7 +22,7 @@ public class AvaliationServiceImpl implements AvaliationService {
 
     @Transactional(readOnly = false)
     @Override
-    public Avaliation salvarAvaliacao(Avaliation avaliation) {
+    public Avaliation add(Avaliation avaliation) {
         if (repository.findByUsuarioId(avaliation.getUser().getIdUser()).isEmpty()) {
             Avaliation avaliationSaved = repository.save(avaliation);
             User user = userRepository.findById(avaliationSaved.getUser().getIdUser()).orElseThrow(() -> new BusinessRulesException("Não foi possível vincular o usuário para a avaliação, pois o id do usuário é inválido!"));
@@ -35,30 +35,30 @@ public class AvaliationServiceImpl implements AvaliationService {
 
     @Transactional(readOnly = false)
     @Override
-    public Avaliation atualizarAvaliacao(Avaliation avaliation) {
+    public Avaliation update(Avaliation avaliation) {
         return repository.save(avaliation);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Avaliation> listarTodasAvaliacoes() {
+    public List<Avaliation> listAll() {
         return repository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Avaliation buscarAvaliacaoPorId(Long idAvaliacao) {
-        return repository.findById(idAvaliacao).orElseThrow(() -> new BusinessRulesException("Não existe avaliação com id " + idAvaliacao + "!"));
+    public Avaliation searchById(Long idAvaliation) {
+        return repository.findById(idAvaliation).orElseThrow(() -> new BusinessRulesException("Não existe avaliação com id " + idAvaliation + "!"));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarAvaliacaoPorId(Long idAvaliacao) {
+    public void deleteById(Long idAvaliation) {
         try {
-            buscarAvaliacaoPorId(idAvaliacao);
-            repository.deleteById(idAvaliacao);
+            searchById(idAvaliation);
+            repository.deleteById(idAvaliation);
         } catch (BusinessRulesException businessRulesException) {
-            throw new BusinessRulesException("Não existe avaliação com id " + idAvaliacao + " para ser deletada!");
+            throw new BusinessRulesException("Não existe avaliação com id " + idAvaliation + " para ser deletada!");
         }
     }
 }

@@ -18,7 +18,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Transactional(readOnly = false)
     @Override
-    public Movie adicionarNovoFilme(Movie movie) {
+    public Movie add(Movie movie) {
         // Verificar se o filme não está cadastrado
         if (repository.findMovieByTitle(movie.getTitle()).isPresent()) {
             throw new BusinessRulesException("O filme " + movie.getTitle() + " já está cadastrado em nosso sistema!");
@@ -29,13 +29,13 @@ public class MovieServiceImpl implements MovieService {
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarFilmePorId(Long idFilme) {
-        repository.deleteById(idFilme);
+    public void deleteById(Long idMovie) {
+        repository.deleteById(idMovie);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Movie> listarTodosFilmes() {
+    public List<Movie> listAll() {
         return repository.findAll();
     }
 

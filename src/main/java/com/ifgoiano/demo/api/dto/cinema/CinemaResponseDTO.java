@@ -1,6 +1,6 @@
 package com.ifgoiano.demo.api.dto.cinema;
 
-import com.ifgoiano.demo.api.dto.sessao.SessaoResponseDTO;
+import com.ifgoiano.demo.api.dto.sessao.SessionResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +23,6 @@ public class CinemaResponseDTO {
     private String cnpj;
 
     // Relacionamentos
-    private List<SessaoResponseDTO> sessoes;
+    private List<SessionResponseDTO> sessoes;
 
 }

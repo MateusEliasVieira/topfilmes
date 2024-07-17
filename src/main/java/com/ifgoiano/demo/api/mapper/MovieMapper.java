@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.mapper;
 
-import com.ifgoiano.demo.api.dto.filme.FilmeRequestDTO;
-import com.ifgoiano.demo.api.dto.filme.FilmeResponseDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieRequestDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieResponseDTO;
 import com.ifgoiano.demo.domain.model.Movie;
 import org.modelmapper.ModelMapper;
 
@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 
 public class MovieMapper {
 
-    public static Movie converterFilmeRequestDTOParaFilmeEntidade(FilmeRequestDTO filmeRequestDTO){
+    public static Movie converterFilmeRequestDTOParaFilmeEntidade(MovieRequestDTO movieRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(filmeRequestDTO, Movie.class);
+        return modelMapper.map(movieRequestDTO, Movie.class);
     }
 
-    public static FilmeResponseDTO converterFilmeEntidadeParaFilmeResponseDTO(Movie movie){
+    public static MovieResponseDTO converterFilmeEntidadeParaFilmeResponseDTO(Movie movie){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(movie, FilmeResponseDTO.class);
+        return modelMapper.map(movie, MovieResponseDTO.class);
     }
 
-    public static List<FilmeResponseDTO> converterListaDeFilmeEntidadeParaListaDeFilmeResponseDTO(List<Movie> listaMovie) {
+    public static List<MovieResponseDTO> converterListaDeFilmeEntidadeParaListaDeFilmeResponseDTO(List<Movie> listaMovie) {
         ModelMapper modelMapper = new ModelMapper();
         return listaMovie.stream()
-                .map(filme -> modelMapper.map(filme, FilmeResponseDTO.class))
+                .map(filme -> modelMapper.map(filme, MovieResponseDTO.class))
                 .collect(Collectors.toList());
     }
 

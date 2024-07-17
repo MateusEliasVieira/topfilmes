@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.mapper;
 
-import com.ifgoiano.demo.api.dto.comentario.ComentarioRequestDTO;
-import com.ifgoiano.demo.api.dto.comentario.ComentarioResponseDTO;
+import com.ifgoiano.demo.api.dto.comentario.CommentRequestDTO;
+import com.ifgoiano.demo.api.dto.comentario.CommentResponseDTO;
 import com.ifgoiano.demo.domain.model.Comment;
 import org.modelmapper.ModelMapper;
 
@@ -10,19 +10,19 @@ import java.util.stream.Collectors;
 
 public class CommentMapper {
 
-    public static Comment converterComentarioRequestDTOEmComentarioEntidade(ComentarioRequestDTO comentarioRequestDTO){
+    public static Comment converterComentarioRequestDTOEmComentarioEntidade(CommentRequestDTO commentRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(comentarioRequestDTO, Comment.class);
+        return modelMapper.map(commentRequestDTO, Comment.class);
     }
 
-    public static ComentarioResponseDTO converterComentarioEntidadeEmComentarioResponseDTO(Comment comment){
+    public static CommentResponseDTO converterComentarioEntidadeEmComentarioResponseDTO(Comment comment){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(comment, ComentarioResponseDTO.class);
+        return modelMapper.map(comment, CommentResponseDTO.class);
     }
-    public static List<ComentarioResponseDTO> converterListaDeComentarioEntidadeParaListaDeComentarioResponseDTO(List<Comment> listaComment) {
+    public static List<CommentResponseDTO> converterListaDeComentarioEntidadeParaListaDeComentarioResponseDTO(List<Comment> listaComment) {
         ModelMapper modelMapper = new ModelMapper();
         return listaComment.stream()
-                .map(comentario -> modelMapper.map(comentario, ComentarioResponseDTO.class))
+                .map(comentario -> modelMapper.map(comentario, CommentResponseDTO.class))
                 .collect(Collectors.toList());
     }
 }

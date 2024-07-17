@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.dto.usuario;
 
-import com.ifgoiano.demo.api.dto.endereco.EnderecoResponseDTO;
-import com.ifgoiano.demo.api.dto.lista.ListaResponseDTO;
+import com.ifgoiano.demo.api.dto.endereco.AddressResponseDTO;
+import com.ifgoiano.demo.api.dto.lista.ListResponseDTO;
 import com.ifgoiano.demo.domain.enums.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioResponseDTO {
+public class UserResponseDTO {
 
     private Long idUsuario;
     private String nome;
@@ -25,7 +25,7 @@ public class UsuarioResponseDTO {
     private Roles role = Roles.ROLE_USER;
 
     // Relacionamentos
-    private EnderecoResponseDTO endereco;
-    private ListaResponseDTO lista;
+    private AddressResponseDTO endereco;
+    private ListResponseDTO lista;
 
 }

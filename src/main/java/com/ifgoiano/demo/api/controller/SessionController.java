@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.controller;
 
-import com.ifgoiano.demo.api.dto.sessao.SessaoRequestDTO;
-import com.ifgoiano.demo.api.dto.sessao.SessaoResponseDTO;
+import com.ifgoiano.demo.api.dto.sessao.SessionRequestDTO;
+import com.ifgoiano.demo.api.dto.sessao.SessionResponseDTO;
 import com.ifgoiano.demo.api.mapper.SessionMapper;
 import com.ifgoiano.demo.domain.service.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,23 +28,23 @@ public class SessionController {
     // USER
 
     @Operation(summary = "Lista sessões", description = "Realiza a listagem de todas sessões e seus filmes relacionados", method = "GET", responses = {
-            @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessaoResponseDTO.class))),
+            @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessionResponseDTO.class))),
             @ApiResponse(description = "Não foi possível listar as sessões!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping("/listar-todas")
     public ResponseEntity<?> listarSessoes(){
-        return ResponseEntity.ok(SessionMapper.converterListaDeSessaoEntidadeParaListaDeSessaoResponseDTO(service.listarTodasSessoes()));
+        return ResponseEntity.ok(SessionMapper.converterListaDeSessaoEntidadeParaListaDeSessaoResponseDTO(service.listAll()));
     }
 
     // ADMIN
 
     @Operation(summary = "Cadastro de uma nova sessão", description = "Cadastra uma nova sessão", method = "POST", responses = {
-            @ApiResponse(description = "Cadastro realizado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessaoResponseDTO.class))),
+            @ApiResponse(description = "Cadastro realizado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessionResponseDTO.class))),
             @ApiResponse(description = "Houve um erro ao cadastrar uma nova sessão!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @PostMapping("/novo")
-    public ResponseEntity<?> adicionarSessao(@RequestBody @Valid SessaoRequestDTO sessaoRequestDTO){
-        return new ResponseEntity<SessaoResponseDTO>(SessionMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.salvarSessao(SessionMapper.converterSessaoRequestDTOEmSessaoEntidade(sessaoRequestDTO))), HttpStatus.CREATED);
+    public ResponseEntity<?> adicionarSessao(@RequestBody @Valid SessionRequestDTO sessionRequestDTO){
+        return new ResponseEntity<SessionResponseDTO>(SessionMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.add(SessionMapper.converterSessaoRequestDTOEmSessaoEntidade(sessionRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Deleta sessões", description = "Realiza a remoção de sessões pelo id", method = "DELETE", responses = {
@@ -53,7 +53,7 @@ public class SessionController {
     })
     @DeleteMapping("/deletar-sessao/{idSessao}")
     public ResponseEntity<?> deletarCinema(@PathVariable("idSessao") @Valid @NotNull(message = "Informe o id da sessão!") Long idSessao){
-        service.deletarSessaoPorId(idSessao);
+        service.deleteById(idSessao);
         return ResponseEntity.noContent().build();
     }
 

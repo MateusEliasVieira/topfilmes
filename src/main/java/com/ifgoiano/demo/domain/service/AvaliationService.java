@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface AvaliationService {
 
-    public Avaliation salvarAvaliacao(Avaliation avaliation);
+    public Avaliation add(Avaliation avaliation);
 
-    public Avaliation atualizarAvaliacao(Avaliation avaliation);
+    public Avaliation update(Avaliation avaliation);
 
-    public List<Avaliation> listarTodasAvaliacoes();
+    public List<Avaliation> listAll();
 
-    public Avaliation buscarAvaliacaoPorId(Long idAvaliacao);
+    public Avaliation searchById(Long idAvaliation);
 
-    public void deletarAvaliacaoPorId(Long idAvaliacao);
+    public void deleteById(Long idAvaliation);
 
 }

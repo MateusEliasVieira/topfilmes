@@ -19,7 +19,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilmeRequestDTO {
+public class MovieRequestDTO {
 
 
     private Long idFilme;

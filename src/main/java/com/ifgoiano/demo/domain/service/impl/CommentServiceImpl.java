@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional(readOnly = false)
     @Override
-    public Comment comentarFilme(Comment comment) {
+    public Comment comment(Comment comment) {
         Comment commentSalvo = repository.save(comment);
         Movie movie = movieRepository.findById(commentSalvo.getMovie().getIdMovie()).orElseThrow(() -> new BusinessRulesException("Não foi possível vincular o filme ao comentário, pois o id do filme é inválido!"));
         User user = userRepository.findById(commentSalvo.getUser().getIdUser()).orElseThrow(() -> new BusinessRulesException("Não foi possível vincular o usuário ao comentário, pois o id do usuário é inválido!"));
@@ -37,21 +37,21 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Comment> listarTodosComentarios() {
+    public List<Comment> listAll() {
         return repository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Comment buscarComentarioPorId(Long idComentario) {
+    public Comment searchById(Long idComentario) {
         return repository.findById(idComentario).orElseThrow(() -> new BusinessRulesException("Não existe comentário com id " + idComentario + "!"));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarComentarioPorId(Long idComentario) {
+    public void deleteById(Long idComentario) {
         try {
-            buscarComentarioPorId(idComentario);
+            searchById(idComentario);
             repository.deleteById(idComentario);
         } catch (BusinessRulesException businessRulesException) {
             throw new BusinessRulesException("Não existe comentário com id " + idComentario + " para ser deletado!");

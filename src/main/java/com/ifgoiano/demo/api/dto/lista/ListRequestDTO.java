@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.dto.lista;
 
-import com.ifgoiano.demo.api.dto.filme.FilmeRequestDTO;
-import com.ifgoiano.demo.api.dto.usuario.UsuarioRequestDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieRequestDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +14,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListaRequestDTO {
+public class ListRequestDTO {
 
     private Date adicao = new Date();
 
     // Relacionamentos
-    private UsuarioRequestDTO usuario;
-    private List<FilmeRequestDTO> filmes;
+    private UserRequestDTO usuario;
+    private List<MovieRequestDTO> filmes;
 }

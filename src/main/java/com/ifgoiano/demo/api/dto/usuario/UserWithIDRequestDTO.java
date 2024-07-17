@@ -1,6 +1,5 @@
 package com.ifgoiano.demo.api.dto.usuario;
 
-import com.ifgoiano.demo.api.dto.endereco.EnderecoRequestDTO;
 import com.ifgoiano.demo.domain.enums.Roles;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
@@ -17,28 +16,31 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioRequestDTO {
+@NoArgsConstructor
+public class UserWithIDRequestDTO {
 
+    @NotNull
     private Long idUsuario;
     @NotBlank
     private String nome;
-    @Email @NotBlank
+    @Email
+    @NotBlank
     private String email;
-    @NotBlank @Size(min = 6, max = 20)
+    @NotBlank
+    @Size(min = 6, max = 20)
     private String usuario;
-    @NotBlank @Size(min = 8)
+    @NotBlank
+    @Size(min = 8)
     private String senha;
     @NotNull
     private Date dataRegistro = new Date();
     @NotNull
     private Date dataNascimento;
-    @CPF @NotBlank
+    @CPF
+    @NotBlank
     private String cpf;
     @Enumerated
     @NotNull
     private Roles role = Roles.ROLE_USER;
-    private EnderecoRequestDTO endereco;
-
 }

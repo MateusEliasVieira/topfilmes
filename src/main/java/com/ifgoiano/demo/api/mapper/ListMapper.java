@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.mapper;
 
-import com.ifgoiano.demo.api.dto.lista.ListaRequestDTO;
-import com.ifgoiano.demo.api.dto.lista.ListaResponseDTO;
+import com.ifgoiano.demo.api.dto.lista.ListRequestDTO;
+import com.ifgoiano.demo.api.dto.lista.ListResponseDTO;
 import com.ifgoiano.demo.domain.model.List;
 import org.modelmapper.ModelMapper;
 
@@ -9,20 +9,20 @@ import java.util.stream.Collectors;
 
 public class ListMapper {
 
-    public static List converterListaRequestDTOEmListaEntidade(ListaRequestDTO listaRequestDTO){
+    public static List converterListaRequestDTOEmListaEntidade(ListRequestDTO listRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(listaRequestDTO, List.class);
+        return modelMapper.map(listRequestDTO, List.class);
     }
 
-    public static ListaResponseDTO converterListaEntidadeEmListaResponseDTO(List list){
+    public static ListResponseDTO converterListaEntidadeEmListaResponseDTO(List list){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(list, ListaResponseDTO.class);
+        return modelMapper.map(list, ListResponseDTO.class);
     }
 
-    public static java.util.List<ListaResponseDTO> converterListaDeListaEntidadeParaListaDeListaResponseDTO(java.util.List<List> listaList) {
+    public static java.util.List<ListResponseDTO> converterListaDeListaEntidadeParaListaDeListaResponseDTO(java.util.List<List> listaList) {
         ModelMapper modelMapper = new ModelMapper();
         return listaList.stream()
-                .map(lista -> modelMapper.map(lista, ListaResponseDTO.class))
+                .map(lista -> modelMapper.map(lista, ListResponseDTO.class))
                 .collect(Collectors.toList());
     }
 

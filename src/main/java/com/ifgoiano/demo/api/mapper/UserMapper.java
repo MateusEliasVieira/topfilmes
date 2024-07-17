@@ -1,8 +1,8 @@
 package com.ifgoiano.demo.api.mapper;
 
-import com.ifgoiano.demo.api.dto.usuario.UsuarioComIDRequestDTO;
-import com.ifgoiano.demo.api.dto.usuario.UsuarioRequestDTO;
-import com.ifgoiano.demo.api.dto.usuario.UsuarioResponseDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserWithIDRequestDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserRequestDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserResponseDTO;
 import com.ifgoiano.demo.domain.model.User;
 import org.modelmapper.ModelMapper;
 
@@ -11,25 +11,25 @@ import java.util.stream.Collectors;
 
 public class UserMapper {
 
-    public static User converterUsuarioRequestDTOEmUsuarioEntidade(UsuarioRequestDTO usuarioRequestDTO) {
+    public static User converterUsuarioRequestDTOEmUsuarioEntidade(UserRequestDTO userRequestDTO) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(usuarioRequestDTO, User.class);
+        return modelMapper.map(userRequestDTO, User.class);
     }
 
-    public static User converterUsuarioComIDRequestDTOEmUsuarioEntidade(UsuarioComIDRequestDTO usuarioComIDRequestDTO){
+    public static User converterUsuarioComIDRequestDTOEmUsuarioEntidade(UserWithIDRequestDTO userWithIDRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(usuarioComIDRequestDTO, User.class);
+        return modelMapper.map(userWithIDRequestDTO, User.class);
     }
 
-    public static UsuarioResponseDTO converterUsuarioEntidadeParaUsuarioResponseDTO(User user) {
+    public static UserResponseDTO converterUsuarioEntidadeParaUsuarioResponseDTO(User user) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(user, UsuarioResponseDTO.class);
+        return modelMapper.map(user, UserResponseDTO.class);
     }
 
-    public static List<UsuarioResponseDTO> converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(List<User> listaUser) {
+    public static List<UserResponseDTO> converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(List<User> listaUser) {
         ModelMapper modelMapper = new ModelMapper();
         return listaUser.stream()
-                .map(usuario -> modelMapper.map(usuario, UsuarioResponseDTO.class))
+                .map(usuario -> modelMapper.map(usuario, UserResponseDTO.class))
                 .collect(Collectors.toList());
     }
 }

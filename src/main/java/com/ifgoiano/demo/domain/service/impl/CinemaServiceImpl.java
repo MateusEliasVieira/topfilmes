@@ -24,7 +24,7 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Transactional(readOnly = false)
     @Override
-    public Cinema save(Cinema cinema) {
+    public Cinema add(Cinema cinema) {
         Optional<Cinema> optionalCinema = repository.findByCnpj(cinema.getCnpj());
         if (optionalCinema.isEmpty()) {
             Cinema cinemaSalvo = repository.save(cinema);

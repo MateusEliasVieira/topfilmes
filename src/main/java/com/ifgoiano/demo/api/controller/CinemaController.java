@@ -43,7 +43,7 @@ public class CinemaController {
     })
     @PostMapping("/novo")
     public ResponseEntity<?> adicionarCinema(@RequestBody @Valid CinemaRequestDTO cinemaRequestDTO){
-        return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.save(CinemaMapper.converterCinemaRequestDTOEmCinemaEntidade(cinemaRequestDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.add(CinemaMapper.converterCinemaRequestDTOEmCinemaEntidade(cinemaRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Deleta um cinema", description = "Realiza a remoção de um cinema pelo id", method = "DELETE", responses = {

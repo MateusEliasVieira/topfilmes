@@ -5,13 +5,13 @@ import com.ifgoiano.demo.domain.model.Session;
 import java.util.List;
 
 public interface SessionService {
-    public Session salvarSessao(Session session);
+    public Session add(Session session);
 
-    public Session atualizarSessao(Session session);
+    public Session update(Session session);
 
-    public List<Session> listarTodasSessoes();
+    public List<Session> listAll();
 
-    public Session buscarSessaoPorId(Long idSessao);
+    public Session searchById(Long idSession);
 
-    public void deletarSessaoPorId(Long idSessao);
+    public void deleteById(Long idSession);
 }

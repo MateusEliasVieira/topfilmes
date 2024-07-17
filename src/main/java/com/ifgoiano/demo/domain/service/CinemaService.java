@@ -5,7 +5,7 @@ import com.ifgoiano.demo.domain.model.Cinema;
 import java.util.List;
 
 public interface CinemaService {
-    public Cinema save(Cinema cinema);
+    public Cinema add(Cinema cinema);
 
     public Cinema update(Cinema cinema);
 

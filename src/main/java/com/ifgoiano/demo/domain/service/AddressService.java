@@ -5,13 +5,13 @@ import com.ifgoiano.demo.domain.model.Address;
 import java.util.List;
 
 public interface AddressService {
-    public Address salvarEndereco(Address address);
+    public Address add(Address address);
 
-    public Address atualizarEndereco(Address address);
+    public Address update(Address address);
 
-    public List<Address> listarTodosEnderecos();
+    public List<Address> listAll();
 
-    public Address buscarEnderecoPorId(Long idEndereco);
+    public Address searchById(Long idEndereco);
 
-    public void deletarEnderecoPorId(Long idEndereco);
+    public void deleteById(Long idEndereco);
 }

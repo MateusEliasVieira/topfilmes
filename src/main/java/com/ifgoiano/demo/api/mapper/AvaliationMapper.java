@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.mapper;
 
-import com.ifgoiano.demo.api.dto.avaliacao.AvaliacaoRequestDTO;
-import com.ifgoiano.demo.api.dto.avaliacao.AvaliacaoResponseDTO;
+import com.ifgoiano.demo.api.dto.avaliacao.AvaliationRequestDTO;
+import com.ifgoiano.demo.api.dto.avaliacao.AvaliationResponseDTO;
 import com.ifgoiano.demo.domain.model.Avaliation;
 import org.modelmapper.ModelMapper;
 
@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 
 public class AvaliationMapper {
 
-    public static Avaliation converterAvaliacaoRequestDTOEmAvaliacaoEntidade(AvaliacaoRequestDTO avaliacaoRequestDTO){
+    public static Avaliation converterAvaliacaoRequestDTOEmAvaliacaoEntidade(AvaliationRequestDTO avaliationRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(avaliacaoRequestDTO, Avaliation.class);
+        return modelMapper.map(avaliationRequestDTO, Avaliation.class);
     }
 
-    public static AvaliacaoResponseDTO converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(Avaliation avaliation){
+    public static AvaliationResponseDTO converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(Avaliation avaliation){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(avaliation, AvaliacaoResponseDTO.class);
+        return modelMapper.map(avaliation, AvaliationResponseDTO.class);
     }
 
-    public static List<AvaliacaoResponseDTO> converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(List<Avaliation> listaAvaliation) {
+    public static List<AvaliationResponseDTO> converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(List<Avaliation> listaAvaliation) {
         ModelMapper modelMapper = new ModelMapper();
         return listaAvaliation.stream()
-                .map(avaliacao -> modelMapper.map(avaliacao, AvaliacaoResponseDTO.class))
+                .map(avaliacao -> modelMapper.map(avaliacao, AvaliationResponseDTO.class))
                 .collect(Collectors.toList());
     }
     

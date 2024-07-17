@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.dto.avaliacao;
 
-import com.ifgoiano.demo.api.dto.filme.FilmeRequestDTO;
-import com.ifgoiano.demo.api.dto.usuario.UsuarioRequestDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieRequestDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserRequestDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,14 +14,14 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AvaliacaoRequestDTO {
+public class AvaliationRequestDTO {
 
     @NotNull
     private int pontuacao;
     private Date dataHora = new Date();
 
     // Relacionamentos
-    private UsuarioRequestDTO usuario;
-    private FilmeRequestDTO filme;
+    private UserRequestDTO usuario;
+    private MovieRequestDTO filme;
 
 }

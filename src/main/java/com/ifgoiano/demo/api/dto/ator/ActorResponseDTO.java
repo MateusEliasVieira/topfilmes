@@ -1,6 +1,6 @@
 package com.ifgoiano.demo.api.dto.ator;
 
-import com.ifgoiano.demo.api.dto.filme.FilmeResponseDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtorResponseDTO {
+public class ActorResponseDTO {
     private Long idAtor;
     private String nome;
     private Date dataNascimento;
-    private List<FilmeResponseDTO> filmes;
+    private List<MovieResponseDTO> filmes;
 }

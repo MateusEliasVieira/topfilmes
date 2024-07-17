@@ -24,7 +24,7 @@ public class ActorServiceImpl implements ActorService {
 
     @Transactional(readOnly = false)
     @Override
-    public Actor salvarAtor(Actor actor) {
+    public Actor add(Actor actor) {
         Actor actorSalvo = repository.save(actor);
         List<Movie> listaDeMovies = new ArrayList<Movie>();
         for (int i = 0; i < actor.getMovies().size(); i++) {
@@ -37,31 +37,31 @@ public class ActorServiceImpl implements ActorService {
 
     @Transactional(readOnly = false)
     @Override
-    public Actor atualizarAtor(Actor actor) {
+    public Actor update(Actor actor) {
         return repository.save(actor);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarAtorPorId(Long idAtor) {
+    public void deleteById(Long idActor) {
         try {
-            buscarAtorPorId(idAtor);
-            repository.deleteById(idAtor);
+            searchById(idActor);
+            repository.deleteById(idActor);
         } catch (BusinessRulesException businessRulesException) {
-            throw new BusinessRulesException("Não existe ator com id " + idAtor + " para ser deletado!");
+            throw new BusinessRulesException("Não existe ator com id " + idActor + " para ser deletado!");
         }
 
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Actor buscarAtorPorId(Long idAtor) {
-        return repository.findById(idAtor).orElseThrow(() -> new BusinessRulesException("Não existe ator com id " + idAtor + "!"));
+    public Actor searchById(Long idActor) {
+        return repository.findById(idActor).orElseThrow(() -> new BusinessRulesException("Não existe ator com id " + idActor + "!"));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Actor> listarTodosAtores() {
+    public List<Actor> listAll() {
         return repository.findAll();
     }
 

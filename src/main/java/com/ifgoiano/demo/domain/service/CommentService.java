@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface CommentService {
 
-    public Comment comentarFilme(Comment comment);
+    public Comment comment(Comment comment);
 
-    public List<Comment> listarTodosComentarios();
+    public List<Comment> listAll();
 
-    public Comment buscarComentarioPorId(Long idComentario);
+    public Comment searchById(Long idComment);
 
-    public void deletarComentarioPorId(Long idComentario);
+    public void deleteById(Long idComment);
 }

@@ -23,7 +23,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Transactional(readOnly = false)
     @Override
-    public Session salvarSessao(Session session) {
+    public Session add(Session session) {
         Session sessionSalva = repository.save(session);
         List<Movie> listaDeMovies = new ArrayList<Movie>();
         for (int i = 0; i < sessionSalva.getMovies().size(); i++) {
@@ -35,28 +35,28 @@ public class SessionServiceImpl implements SessionService {
 
     @Transactional(readOnly = false)
     @Override
-    public Session atualizarSessao(Session session) {
+    public Session update(Session session) {
         return repository.save(session);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Session> listarTodasSessoes() {
+    public List<Session> listAll() {
         return repository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Session buscarSessaoPorId(Long idSessao) {
-        return repository.findById(idSessao).orElseThrow(() -> new BusinessRulesException("Não existe sessão com id " + idSessao + "!"));
+    public Session searchById(Long idSession) {
+        return repository.findById(idSession).orElseThrow(() -> new BusinessRulesException("Não existe sessão com id " + idSession + "!"));
 
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarSessaoPorId(Long idSessao) {
+    public void deleteById(Long idSessao) {
         try {
-            buscarSessaoPorId(idSessao);
+            searchById(idSessao);
             repository.deleteById(idSessao);
         } catch (BusinessRulesException businessRulesException) {
             throw new BusinessRulesException("Não existe sessão com id " + idSessao + " para ser deletada!");

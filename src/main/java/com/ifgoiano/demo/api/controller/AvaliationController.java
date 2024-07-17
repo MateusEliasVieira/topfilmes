@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.controller;
 
-import com.ifgoiano.demo.api.dto.avaliacao.AvaliacaoRequestDTO;
-import com.ifgoiano.demo.api.dto.avaliacao.AvaliacaoResponseDTO;
+import com.ifgoiano.demo.api.dto.avaliacao.AvaliationRequestDTO;
+import com.ifgoiano.demo.api.dto.avaliacao.AvaliationResponseDTO;
 import com.ifgoiano.demo.api.mapper.AvaliationMapper;
 import com.ifgoiano.demo.domain.service.AvaliationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,21 +28,21 @@ public class AvaliationController {
     // USER
 
     @Operation(summary = "Cadastra avaliação", description = "Realiza o cadastro de avaliação", method = "POST", responses = {
-            @ApiResponse(description = "Avaliação realizada com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliacaoResponseDTO.class))),
+            @ApiResponse(description = "Avaliação realizada com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliationResponseDTO.class))),
             @ApiResponse(description = "Não foi possível cadastrar a avaliação!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @PostMapping("/novo")
-    public ResponseEntity<?> fazerAvaliacao(@RequestBody @Valid AvaliacaoRequestDTO avaliacaoRequestDTO){
-        return new ResponseEntity<AvaliacaoResponseDTO>(AvaliationMapper.converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(service.salvarAvaliacao(AvaliationMapper.converterAvaliacaoRequestDTOEmAvaliacaoEntidade(avaliacaoRequestDTO))), HttpStatus.CREATED);
+    public ResponseEntity<?> fazerAvaliacao(@RequestBody @Valid AvaliationRequestDTO avaliationRequestDTO){
+        return new ResponseEntity<AvaliationResponseDTO>(AvaliationMapper.converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(service.add(AvaliationMapper.converterAvaliacaoRequestDTOEmAvaliacaoEntidade(avaliationRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Lista avaliações", description = "Realiza a listagem de todas avaliações", method = "GET", responses = {
-            @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliacaoResponseDTO.class))),
+            @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliationResponseDTO.class))),
             @ApiResponse(description = "Não foi possível listar as avaliações!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping("/listar-todas")
     public ResponseEntity<?> listarTodasAvaliacoes(){
-        return ResponseEntity.ok(AvaliationMapper.converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(service.listarTodasAvaliacoes()));
+        return ResponseEntity.ok(AvaliationMapper.converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(service.listAll()));
     }
 
     // ADMIN
@@ -53,7 +53,7 @@ public class AvaliationController {
     })
     @DeleteMapping("/deletar/{idAvaliacao}")
     public ResponseEntity<?> deletarAvaliacao(@PathVariable("idAvaliacao") @Valid @NotNull(message = "O id da avaliação deve ser informado!") Long idAvaliacao) {
-        service.deletarAvaliacaoPorId(idAvaliacao);
+        service.deleteById(idAvaliacao);
         return ResponseEntity.noContent().build();
     }
 

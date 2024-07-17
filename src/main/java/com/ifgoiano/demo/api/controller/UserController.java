@@ -1,8 +1,8 @@
 package com.ifgoiano.demo.api.controller;
 
-import com.ifgoiano.demo.api.dto.usuario.UsuarioComIDRequestDTO;
-import com.ifgoiano.demo.api.dto.usuario.UsuarioRequestDTO;
-import com.ifgoiano.demo.api.dto.usuario.UsuarioResponseDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserWithIDRequestDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserRequestDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserResponseDTO;
 import com.ifgoiano.demo.api.mapper.UserMapper;
 import com.ifgoiano.demo.domain.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,24 +28,24 @@ public class UserController {
 
     // USER
     @Operation(summary = "Cadastra usuários", description = "Realiza cadastros de novos usuários", method = "POST", responses = {
-            @ApiResponse(description = "Usuário cadastrado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UsuarioResponseDTO.class))),
+            @ApiResponse(description = "Usuário cadastrado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao cadastrar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @PostMapping("/novo")
-    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) {
-        UsuarioResponseDTO usuarioResponseDTO = UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.criarNovoUsuario(UserMapper.converterUsuarioRequestDTOEmUsuarioEntidade(usuarioRequestDTO)));
-        return new ResponseEntity<UsuarioResponseDTO>(usuarioResponseDTO, HttpStatus.CREATED);
+    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+        UserResponseDTO userResponseDTO = UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.add(UserMapper.converterUsuarioRequestDTOEmUsuarioEntidade(userRequestDTO)));
+        return new ResponseEntity<UserResponseDTO>(userResponseDTO, HttpStatus.CREATED);
     }
 
     // ADMIN
 
     @Operation(summary = "Atualiza usuários", description = "Realiza a atualização de um usuário", method = "PUT", responses = {
-            @ApiResponse(description = "Usuário atualizado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UsuarioResponseDTO.class))),
+            @ApiResponse(description = "Usuário atualizado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao atualizar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @PutMapping("/atualizar")
-    public ResponseEntity<?> atualizarUsuario(@RequestBody @Valid UsuarioComIDRequestDTO usuarioComIDRequestDTO) {
-        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.atualizarUsuarioPorId(UserMapper.converterUsuarioComIDRequestDTOEmUsuarioEntidade(usuarioComIDRequestDTO))));
+    public ResponseEntity<?> atualizarUsuario(@RequestBody @Valid UserWithIDRequestDTO userWithIDRequestDTO) {
+        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.update(UserMapper.converterUsuarioComIDRequestDTOEmUsuarioEntidade(userWithIDRequestDTO))));
     }
 
     @Operation(summary = "Deleta usuários", description = "Realiza a remoção de um usuário por id", method = "DELETE", responses = {
@@ -54,26 +54,26 @@ public class UserController {
     })
     @DeleteMapping("/deletar/{idUsuario}")
     public ResponseEntity<?> deletarUsuarioPorId(@PathVariable("idUsuario") @Valid @NotNull(message = "Informe o id do usuário!") Long idUsuario) {
-        service.deletarUsuarioPorId(idUsuario);
+        service.deleteById(idUsuario);
         return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Buscar usuários", description = "Realiza a busca de um usuário por id", method = "GET", responses = {
-            @ApiResponse(description = "Usuário encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UsuarioResponseDTO.class))),
+            @ApiResponse(description = "Usuário encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao encontrar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping("/buscar/{idUsuario}")
     public ResponseEntity<?> buscarUsuarioPorId(@PathVariable("idUsuario") @Valid @NotNull(message = "Informe o id do usuário!") Long idUsuario) {
-        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.buscarUsuarioPorId(idUsuario)));
+        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.searchById(idUsuario)));
     }
 
     @Operation(summary = "Lista usuários", description = "Realiza a listagem de todos os usuários cadastrados", method = "GET", responses = {
-            @ApiResponse(description = "Usuários listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UsuarioResponseDTO.class))),
+            @ApiResponse(description = "Usuários listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao listar usuários!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping("listar-todos")
     public ResponseEntity<?> listarTodosUsuarios() {
-        return ResponseEntity.ok(UserMapper.converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(service.listarTodosUsuarios()));
+        return ResponseEntity.ok(UserMapper.converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(service.listAll()));
     }
 
 }

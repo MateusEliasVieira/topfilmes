@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface ActorService {
 
-    public Actor salvarAtor(Actor actor);
+    public Actor add(Actor actor);
 
-    public Actor atualizarAtor(Actor actor);
+    public Actor update(Actor actor);
 
-    public void deletarAtorPorId(Long idAtor);
+    public void deleteById(Long idActor);
 
-    public Actor buscarAtorPorId(Long idAtor);
+    public Actor searchById(Long idActor);
 
-    public List<Actor> listarTodosAtores();
+    public List<Actor> listAll();
 
 
 }

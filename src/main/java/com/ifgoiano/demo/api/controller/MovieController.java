@@ -1,7 +1,7 @@
 package com.ifgoiano.demo.api.controller;
 
-import com.ifgoiano.demo.api.dto.filme.FilmeRequestDTO;
-import com.ifgoiano.demo.api.dto.filme.FilmeResponseDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieRequestDTO;
+import com.ifgoiano.demo.api.dto.filme.MovieResponseDTO;
 import com.ifgoiano.demo.api.mapper.MovieMapper;
 import com.ifgoiano.demo.api.message.MessageResponse;
 import com.ifgoiano.demo.domain.service.MovieService;
@@ -30,22 +30,22 @@ public class MovieController {
 
     @GetMapping("/listar")
     @Operation(summary = "Lista filmes", description = "Lista todos os filmes cadastrados", method = "GET", responses = {
-            @ApiResponse(description = "Filmes listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FilmeResponseDTO.class))),
+            @ApiResponse(description = "Filmes listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Erro ao listar filmes!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     public ResponseEntity<?> listarFilmes() {
-        return ResponseEntity.ok(MovieMapper.converterListaDeFilmeEntidadeParaListaDeFilmeResponseDTO(service.listarTodosFilmes()));
+        return ResponseEntity.ok(MovieMapper.converterListaDeFilmeEntidadeParaListaDeFilmeResponseDTO(service.listAll()));
     }
 
     // ADMIN
 
     @PostMapping("/novo")
     @Operation(summary = "Cadastra filmes", description = "Salva um novo filme", method = "POST", responses = {
-            @ApiResponse(description = "Filme cadastrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FilmeResponseDTO.class))),
+            @ApiResponse(description = "Filme cadastrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Erro ao cadastrar filme!", responseCode = "500", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MessageResponse.class)))
     })
-    public ResponseEntity<?> criarNovoFilme(@RequestBody @Valid FilmeRequestDTO filmeRequestDTO) {
-        return new ResponseEntity<FilmeResponseDTO>(MovieMapper.converterFilmeEntidadeParaFilmeResponseDTO(service.adicionarNovoFilme(MovieMapper.converterFilmeRequestDTOParaFilmeEntidade(filmeRequestDTO))), HttpStatus.CREATED);
+    public ResponseEntity<?> criarNovoFilme(@RequestBody @Valid MovieRequestDTO movieRequestDTO) {
+        return new ResponseEntity<MovieResponseDTO>(MovieMapper.converterFilmeEntidadeParaFilmeResponseDTO(service.add(MovieMapper.converterFilmeRequestDTOParaFilmeEntidade(movieRequestDTO))), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deletar/{idFilme}")
@@ -54,7 +54,7 @@ public class MovieController {
             @ApiResponse(description = "Erro ao deletar filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     public ResponseEntity<?> deletarFilmePorId(@PathVariable("idFilme") @Valid @NotNull(message = "Informe o id do filme!") Long idFilme) {
-        service.deletarFilmePorId(idFilme);
+        service.deleteById(idFilme);
         return ResponseEntity.noContent().build();
     }
 

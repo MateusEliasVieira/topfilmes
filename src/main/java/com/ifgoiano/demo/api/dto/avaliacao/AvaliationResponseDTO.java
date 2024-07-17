@@ -1,6 +1,6 @@
 package com.ifgoiano.demo.api.dto.avaliacao;
 
-import com.ifgoiano.demo.api.dto.usuario.UsuarioResponseDTO;
+import com.ifgoiano.demo.api.dto.usuario.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +12,12 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AvaliacaoResponseDTO {
+public class AvaliationResponseDTO {
 
     private Long idAvaliacao;
     private int pontuacao;
     private Date dataHora;
 
     // Relacionamentos
-    private UsuarioResponseDTO usuario;
+    private UserResponseDTO usuario;
 }

@@ -18,33 +18,33 @@ public class AddressServiceImpl implements AddressService {
 
     @Transactional(readOnly = false)
     @Override
-    public Address salvarEndereco(Address address) {
+    public Address add(Address address) {
         return repository.save(address);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public Address atualizarEndereco(Address address) {
+    public Address update(Address address) {
         return repository.save(address);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Address> listarTodosEnderecos() {
+    public List<Address> listAll() {
         return repository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Address buscarEnderecoPorId(Long idEndereco) {
+    public Address searchById(Long idEndereco) {
         return repository.findById(idEndereco).orElseThrow(() -> new BusinessRulesException("Não existe endereço com id " + idEndereco + "!"));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarEnderecoPorId(Long idEndereco) {
+    public void deleteById(Long idEndereco) {
         try {
-            buscarEnderecoPorId(idEndereco);
+            searchById(idEndereco);
             repository.deleteById(idEndereco);
         } catch (BusinessRulesException businessRulesException) {
             throw new BusinessRulesException("Não existe endereço com id " + idEndereco + " para ser deletado!");

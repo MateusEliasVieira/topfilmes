@@ -1,8 +1,8 @@
 package com.ifgoiano.demo.api.dto.filme;
 
-import com.ifgoiano.demo.api.dto.ator.AtorResponseDTO;
-import com.ifgoiano.demo.api.dto.avaliacao.AvaliacaoResponseDTO;
-import com.ifgoiano.demo.api.dto.comentario.ComentarioResponseDTO;
+import com.ifgoiano.demo.api.dto.ator.ActorResponseDTO;
+import com.ifgoiano.demo.api.dto.avaliacao.AvaliationResponseDTO;
+import com.ifgoiano.demo.api.dto.comentario.CommentResponseDTO;
 import com.ifgoiano.demo.domain.enums.Gender;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilmeResponseDTO {
+public class MovieResponseDTO {
 
     private Long idFilme;
     private String titulo;
@@ -30,8 +30,8 @@ public class FilmeResponseDTO {
     private String distribuidora;
 
     // Relacionamentos
-    private List<AvaliacaoResponseDTO> avaliacoes;
-    private List<ComentarioResponseDTO> comentarios;
-    private List<AtorResponseDTO> atores;
+    private List<AvaliationResponseDTO> avaliacoes;
+    private List<CommentResponseDTO> comentarios;
+    private List<ActorResponseDTO> atores;
 
 }

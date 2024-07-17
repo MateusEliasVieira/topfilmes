@@ -1,6 +1,6 @@
 package com.ifgoiano.demo.api.dto.cinema;
 
-import com.ifgoiano.demo.api.dto.sessao.SessaoRequestDTO;
+import com.ifgoiano.demo.api.dto.sessao.SessionRequestDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,5 +28,5 @@ public class CinemaRequestDTO {
     @CNPJ
     private String cnpj;
 
-    private List<SessaoRequestDTO> sessoes;
+    private List<SessionRequestDTO> sessoes;
 }

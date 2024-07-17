@@ -22,7 +22,7 @@ public class ListServiceImpl implements ListService {
 
     @Transactional(readOnly = false)
     @Override
-    public List salvarLista(List list) {
+    public List add(List list) {
         List listSalva = repository.save(list);
         java.util.List<Movie> movies = new ArrayList<Movie>();
         for (int i = 0; i < listSalva.getMovies().size(); i++) {
@@ -35,27 +35,27 @@ public class ListServiceImpl implements ListService {
 
     @Transactional(readOnly = false)
     @Override
-    public List atualizarLista(List list) {
+    public List update(List list) {
         return repository.save(list);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public java.util.List<List> listarTodasListas() {
+    public java.util.List<List> listAll() {
         return repository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List buscarListaPorId(Long idLista) {
+    public List searchById(Long idLista) {
         return repository.findById(idLista).orElseThrow(() -> new BusinessRulesException("Não existe lista com id " + idLista + "!"));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletarListaPorId(Long idLista) {
+    public void deleteById(Long idLista) {
         try {
-            buscarListaPorId(idLista);
+            searchById(idLista);
             repository.deleteById(idLista);
         } catch (BusinessRulesException businessRulesException) {
             throw new BusinessRulesException("Não existe lista com id " + idLista + " para ser deletada!");
