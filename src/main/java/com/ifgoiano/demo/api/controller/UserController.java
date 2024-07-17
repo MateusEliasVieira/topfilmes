@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/usuario", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Usuario")
 public class UserController {
 
@@ -31,8 +31,8 @@ public class UserController {
             @ApiResponse(description = "Usuário cadastrado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao cadastrar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PostMapping("/novo")
-    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         UserResponseDTO userResponseDTO = UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.add(UserMapper.converterUsuarioRequestDTOEmUsuarioEntidade(userRequestDTO)));
         return new ResponseEntity<UserResponseDTO>(userResponseDTO, HttpStatus.CREATED);
     }
@@ -43,8 +43,8 @@ public class UserController {
             @ApiResponse(description = "Usuário atualizado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao atualizar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PutMapping("/atualizar")
-    public ResponseEntity<?> atualizarUsuario(@RequestBody @Valid UserWithIDRequestDTO userWithIDRequestDTO) {
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody @Valid UserWithIDRequestDTO userWithIDRequestDTO) {
         return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.update(UserMapper.converterUsuarioComIDRequestDTOEmUsuarioEntidade(userWithIDRequestDTO))));
     }
 
@@ -52,9 +52,9 @@ public class UserController {
             @ApiResponse(description = "Usuário deletado com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao deletar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/deletar/{idUsuario}")
-    public ResponseEntity<?> deletarUsuarioPorId(@PathVariable("idUsuario") @Valid @NotNull(message = "Informe o id do usuário!") Long idUsuario) {
-        service.deleteById(idUsuario);
+    @DeleteMapping("/delete/{idUser}")
+    public ResponseEntity<?> deleteById(@PathVariable("idUser") @Valid @NotNull(message = "Informe o id do usuário!") Long idUser) {
+        service.deleteById(idUser);
         return ResponseEntity.noContent().build();
     }
 
@@ -62,9 +62,9 @@ public class UserController {
             @ApiResponse(description = "Usuário encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao encontrar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/buscar/{idUsuario}")
-    public ResponseEntity<?> buscarUsuarioPorId(@PathVariable("idUsuario") @Valid @NotNull(message = "Informe o id do usuário!") Long idUsuario) {
-        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.searchById(idUsuario)));
+    @GetMapping("/buscar/{idUser}")
+    public ResponseEntity<?> searchById(@PathVariable("idUser") @Valid @NotNull(message = "Informe o id do usuário!") Long idUser) {
+        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.searchById(idUser)));
     }
 
     @Operation(summary = "Lista usuários", description = "Realiza a listagem de todos os usuários cadastrados", method = "GET", responses = {
@@ -72,7 +72,7 @@ public class UserController {
             @ApiResponse(description = "Erro ao listar usuários!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping("listar-todos")
-    public ResponseEntity<?> listarTodosUsuarios() {
+    public ResponseEntity<?> listAll() {
         return ResponseEntity.ok(UserMapper.converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(service.listAll()));
     }
 

@@ -16,12 +16,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserResponseDTO {
 
-    private Long idUsuario;
-    private String nome;
+    private Long idUser;
+    private String name;
     private String email;
-    private String usuario;
-    private Date dataRegistro = new Date();
-    private Date dataNascimento;
+    private String user;
+    private Date dateRegister = new Date();
+    private Date dateOfBirth;
     private Roles role = Roles.ROLE_USER;
 
     // Relacionamentos

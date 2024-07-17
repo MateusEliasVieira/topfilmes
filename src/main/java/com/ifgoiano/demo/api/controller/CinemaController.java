@@ -30,8 +30,8 @@ public class CinemaController {
             @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CinemaResponseDTO.class))),
             @ApiResponse(description = "Não foi possível listar os cinemas!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/listar-todos")
-    public ResponseEntity<?> listarCinemas(){
+    @GetMapping("/list-all")
+    public ResponseEntity<?> listAll(){
         return ResponseEntity.ok(CinemaMapper.converterListaDeCinemaEntidadeParaListaDeCinemaResponseDTO(service.listAll()));
     }
 
@@ -41,8 +41,8 @@ public class CinemaController {
             @ApiResponse(description = "Cadastro realizado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CinemaResponseDTO.class))),
             @ApiResponse(description = "Não foi possível cadastrar o cinema!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PostMapping("/novo")
-    public ResponseEntity<?> adicionarCinema(@RequestBody @Valid CinemaRequestDTO cinemaRequestDTO){
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid CinemaRequestDTO cinemaRequestDTO){
         return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.add(CinemaMapper.converterCinemaRequestDTOEmCinemaEntidade(cinemaRequestDTO))), HttpStatus.CREATED);
     }
 
@@ -50,8 +50,8 @@ public class CinemaController {
             @ApiResponse(description = "Remoção realizada com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Não foi possível remover um filme", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/deletar-cinema/{idCinema}")
-    public ResponseEntity<?> deletarCinema(@PathVariable("idCinema") @Valid @NotNull(message = "Informe o id do cinema!") Long idCinema){
+    @DeleteMapping("/delete/{idCinema}")
+    public ResponseEntity<?> delete(@PathVariable("idCinema") @Valid @NotNull(message = "Informe o id do cinema!") Long idCinema){
         service.deleteById(idCinema);
         return ResponseEntity.noContent().build();
     }

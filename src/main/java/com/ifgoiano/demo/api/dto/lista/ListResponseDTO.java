@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ListResponseDTO {
 
-    private Long idLista;
-    private Date adicao;
+    private Long idList;
+    private Date addition;
 
     // Relacionamentos
     private List<Movie> movies;

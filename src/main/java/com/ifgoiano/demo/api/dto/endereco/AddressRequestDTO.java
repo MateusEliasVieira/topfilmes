@@ -15,15 +15,15 @@ import lombok.Setter;
 public class AddressRequestDTO {
 
     @NotBlank
-    private String rua;
-    private String numero;
+    private String street;
+    private String number;
     @NotBlank
-    private String bairro;
+    private String neighborhood;
     @NotNull
     @Size(min = 9, max = 9)
     private String cep;
     @NotBlank
-    private String cidade;
+    private String city;
     @NotBlank
     @Size(min = 2, max = 2)
     private String uf;

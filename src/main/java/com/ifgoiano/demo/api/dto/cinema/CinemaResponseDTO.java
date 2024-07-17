@@ -16,13 +16,13 @@ import java.util.List;
 public class CinemaResponseDTO {
 
     private Long idCinema;
-    private String nome;
-    private String endereco;
-    private String funcionamento;
-    private int salas;
+    private String name;
+    private String address;
+    private String operation;
+    private int rooms;
     private String cnpj;
 
     // Relacionamentos
-    private List<SessionResponseDTO> sessoes;
+    private List<SessionResponseDTO> sessions;
 
 }

@@ -16,9 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ListRequestDTO {
 
-    private Date adicao = new Date();
+    private Date addition = new Date();
 
     // Relacionamentos
-    private UserRequestDTO usuario;
-    private List<MovieRequestDTO> filmes;
+    private UserRequestDTO user;
+    private List<MovieRequestDTO> movies;
 }

@@ -17,15 +17,15 @@ import java.util.List;
 @AllArgsConstructor
 public class SessionRequestDTO {
 
-    private Long idSessao;
+    private Long idSession;
     @NotNull
-    private Date horario;
+    private Date time;
     @NotNull
-    private int ingressos;
+    private int tickets;
     @NotNull
-    private int sala;
+    private int room;
     @NotNull
-    private int codSessao;
+    private int codSession;
 
     // Relacionamentos
 

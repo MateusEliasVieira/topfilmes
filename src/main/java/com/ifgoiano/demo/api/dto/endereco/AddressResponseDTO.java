@@ -14,7 +14,7 @@ public class AddressResponseDTO {
     private Long idAddress;
     private String street;
     private String number;
-    private String neighborhood;;
+    private String neighborhood;
     private String cep;
     private String city;
     private String uf;

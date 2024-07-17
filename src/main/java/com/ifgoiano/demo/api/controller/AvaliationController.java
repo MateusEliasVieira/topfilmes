@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/avaliacao", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/avaliation", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Avaliação")
 public class AvaliationController {
 
@@ -31,8 +31,8 @@ public class AvaliationController {
             @ApiResponse(description = "Avaliação realizada com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliationResponseDTO.class))),
             @ApiResponse(description = "Não foi possível cadastrar a avaliação!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PostMapping("/novo")
-    public ResponseEntity<?> fazerAvaliacao(@RequestBody @Valid AvaliationRequestDTO avaliationRequestDTO){
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid AvaliationRequestDTO avaliationRequestDTO){
         return new ResponseEntity<AvaliationResponseDTO>(AvaliationMapper.converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(service.add(AvaliationMapper.converterAvaliacaoRequestDTOEmAvaliacaoEntidade(avaliationRequestDTO))), HttpStatus.CREATED);
     }
 
@@ -40,8 +40,8 @@ public class AvaliationController {
             @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliationResponseDTO.class))),
             @ApiResponse(description = "Não foi possível listar as avaliações!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/listar-todas")
-    public ResponseEntity<?> listarTodasAvaliacoes(){
+    @GetMapping("/list-all")
+    public ResponseEntity<?> listAll(){
         return ResponseEntity.ok(AvaliationMapper.converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(service.listAll()));
     }
 
@@ -51,9 +51,9 @@ public class AvaliationController {
             @ApiResponse(description = "Remoção realizada com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Não foi possível remover uma avaliação", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/deletar/{idAvaliacao}")
-    public ResponseEntity<?> deletarAvaliacao(@PathVariable("idAvaliacao") @Valid @NotNull(message = "O id da avaliação deve ser informado!") Long idAvaliacao) {
-        service.deleteById(idAvaliacao);
+    @DeleteMapping("/delete/{idAvaliation}")
+    public ResponseEntity<?> delete(@PathVariable("idAvaliation") @Valid @NotNull(message = "O id da avaliação deve ser informado!") Long idAvaliation) {
+        service.deleteById(idAvaliation);
         return ResponseEntity.noContent().build();
     }
 

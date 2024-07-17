@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/lista", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Lista")
 public class ListController {
 
@@ -22,13 +22,13 @@ public class ListController {
 
     // USER
 
-    @PostMapping("/novo")
-    public ResponseEntity<?> salvarLista(@RequestBody @Valid ListRequestDTO listRequestDTO){
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid ListRequestDTO listRequestDTO){
         return new ResponseEntity<ListResponseDTO>(ListMapper.converterListaEntidadeEmListaResponseDTO( service.add(ListMapper.converterListaRequestDTOEmListaEntidade(listRequestDTO))), HttpStatus.CREATED);
     }
 
-    @GetMapping("/listar-todos")
-    public ResponseEntity<?> listarTodasListas(){
+    @GetMapping("/list-all")
+    public ResponseEntity<?> listAll(){
         return ResponseEntity.ok(ListMapper.converterListaDeListaEntidadeParaListaDeListaResponseDTO(service.listAll()));
     }
 

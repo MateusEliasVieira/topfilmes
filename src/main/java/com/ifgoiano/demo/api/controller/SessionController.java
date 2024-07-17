@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/sessao", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/session", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Sessao")
 public class SessionController {
 
@@ -31,8 +31,8 @@ public class SessionController {
             @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessionResponseDTO.class))),
             @ApiResponse(description = "Não foi possível listar as sessões!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/listar-todas")
-    public ResponseEntity<?> listarSessoes(){
+    @GetMapping("/list-all")
+    public ResponseEntity<?> listAll(){
         return ResponseEntity.ok(SessionMapper.converterListaDeSessaoEntidadeParaListaDeSessaoResponseDTO(service.listAll()));
     }
 
@@ -42,8 +42,8 @@ public class SessionController {
             @ApiResponse(description = "Cadastro realizado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessionResponseDTO.class))),
             @ApiResponse(description = "Houve um erro ao cadastrar uma nova sessão!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PostMapping("/novo")
-    public ResponseEntity<?> adicionarSessao(@RequestBody @Valid SessionRequestDTO sessionRequestDTO){
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid SessionRequestDTO sessionRequestDTO){
         return new ResponseEntity<SessionResponseDTO>(SessionMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.add(SessionMapper.converterSessaoRequestDTOEmSessaoEntidade(sessionRequestDTO))), HttpStatus.CREATED);
     }
 
@@ -51,9 +51,9 @@ public class SessionController {
             @ApiResponse(description = "Remoção realizada com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Não foi possível deletar a sessão!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/deletar-sessao/{idSessao}")
-    public ResponseEntity<?> deletarCinema(@PathVariable("idSessao") @Valid @NotNull(message = "Informe o id da sessão!") Long idSessao){
-        service.deleteById(idSessao);
+    @DeleteMapping("/delete-session/{idSession}")
+    public ResponseEntity<?> delete(@PathVariable("idSession") @Valid @NotNull(message = "Informe o id da sessão!") Long idSession){
+        service.deleteById(idSession);
         return ResponseEntity.noContent().build();
     }
 

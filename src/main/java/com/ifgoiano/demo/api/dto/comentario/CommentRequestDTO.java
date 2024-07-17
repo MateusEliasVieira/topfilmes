@@ -20,9 +20,9 @@ public class CommentRequestDTO {
 
     @NotBlank
     @Size(max = 280)
-    private String texto;
+    private String text;
     @NotNull
-    private Date dataHora = new Date();
+    private Date dateHour = new Date();
     @NotNull
     private Movie movie;
     @NotNull

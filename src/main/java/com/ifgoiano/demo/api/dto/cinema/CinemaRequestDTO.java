@@ -18,15 +18,15 @@ import java.util.List;
 public class CinemaRequestDTO {
 
     @NotBlank
-    private String nome;
+    private String name;
     @NotBlank
-    private String endereco;
+    private String address;
     @NotBlank
-    private String funcionamento;
+    private String operation;
     @NotNull
-    private int salas;
+    private int rooms;
     @CNPJ
     private String cnpj;
 
-    private List<SessionRequestDTO> sessoes;
+    private List<SessionRequestDTO> sessions;
 }

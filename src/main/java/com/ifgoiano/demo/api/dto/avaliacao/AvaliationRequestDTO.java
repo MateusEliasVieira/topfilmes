@@ -17,11 +17,11 @@ import java.util.Date;
 public class AvaliationRequestDTO {
 
     @NotNull
-    private int pontuacao;
-    private Date dataHora = new Date();
+    private int score;
+    private Date dateHour = new Date();
 
     // Relacionamentos
-    private UserRequestDTO usuario;
-    private MovieRequestDTO filme;
+    private UserRequestDTO user;
+    private MovieRequestDTO movie;
 
 }

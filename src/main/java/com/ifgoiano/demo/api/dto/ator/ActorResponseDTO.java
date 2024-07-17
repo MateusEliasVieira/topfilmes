@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActorResponseDTO {
-    private Long idAtor;
-    private String nome;
-    private Date dataNascimento;
-    private List<MovieResponseDTO> filmes;
+    private Long idActor;
+    private String name;
+    private Date dateOfBirth;
+    private List<MovieResponseDTO> movies;
 }

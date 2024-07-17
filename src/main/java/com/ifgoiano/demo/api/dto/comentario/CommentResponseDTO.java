@@ -14,11 +14,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class CommentResponseDTO {
 
-    private Long idComentario;
-    private String texto;
-    private Date dataHora;
+    private Long idComment;
+    private String text;
+    private Date dateHour;
 
     // Relacionamento
-    private UserResponseDTO usuario;
+    private UserResponseDTO user;
 
 }

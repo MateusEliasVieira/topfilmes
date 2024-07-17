@@ -21,24 +21,24 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserRequestDTO {
 
-    private Long idUsuario;
+    private Long idUser;
     @NotBlank
-    private String nome;
+    private String name;
     @Email @NotBlank
     private String email;
     @NotBlank @Size(min = 6, max = 20)
-    private String usuario;
+    private String user;
     @NotBlank @Size(min = 8)
-    private String senha;
+    private String password;
     @NotNull
-    private Date dataRegistro = new Date();
+    private Date dateRegister = new Date();
     @NotNull
-    private Date dataNascimento;
+    private Date dateOfBirth;
     @CPF @NotBlank
     private String cpf;
     @Enumerated
     @NotNull
     private Roles role = Roles.ROLE_USER;
-    private AddressRequestDTO endereco;
+    private AddressRequestDTO address;
 
 }

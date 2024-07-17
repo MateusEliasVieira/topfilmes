@@ -19,19 +19,19 @@ import java.util.List;
 @NoArgsConstructor
 public class MovieResponseDTO {
 
-    private Long idFilme;
-    private String titulo;
-    private String diretor;
+    private Long idMovie;
+    private String title;
+    private String director;
     private Gender gender;
     private String sinopse;
-    private Date lancamento;
-    private int duracao;
-    private int classificacao;
-    private String distribuidora;
+    private Date launch;
+    private int duration;
+    private int classification;
+    private String distributor;
 
     // Relacionamentos
-    private List<AvaliationResponseDTO> avaliacoes;
-    private List<CommentResponseDTO> comentarios;
-    private List<ActorResponseDTO> atores;
+    private List<AvaliationResponseDTO> avaliations;
+    private List<CommentResponseDTO> comments;
+    private List<ActorResponseDTO> actors;
 
 }

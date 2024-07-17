@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/comentarios", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/comments", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Comentário")
 public class CommentController {
 
@@ -30,8 +30,8 @@ public class CommentController {
             @ApiResponse(description = "Comentário foi realizado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao comentar em filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PostMapping("/comentar")
-    public ResponseEntity<?> comentarFilme(@RequestBody @Valid CommentRequestDTO commentRequestDTO) {
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid CommentRequestDTO commentRequestDTO) {
         return new ResponseEntity<CommentResponseDTO>(CommentMapper.converterComentarioEntidadeEmComentarioResponseDTO(service.comment(CommentMapper.converterComentarioRequestDTOEmComentarioEntidade(commentRequestDTO))), HttpStatus.CREATED);
     }
 
@@ -39,8 +39,8 @@ public class CommentController {
             @ApiResponse(description = "Comentários do filme listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao listar comentários do filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/listar-comentarios")
-    public ResponseEntity<?> listarComentarios() {
+    @GetMapping("/list-all")
+    public ResponseEntity<?> listAll() {
         return ResponseEntity.ok(CommentMapper.converterListaDeComentarioEntidadeParaListaDeComentarioResponseDTO(service.listAll()));
     }
 
@@ -50,9 +50,9 @@ public class CommentController {
             @ApiResponse(description = "Comentário foi deletado com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao deletar comentário do filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/deletar-comentario/{idComentario}")
-    public ResponseEntity<?> deletarComentarioDoFilme(@PathVariable("idComentario") @Valid @NotNull(message = "Informe o id do comentário!") Long idComentario) {
-        service.deleteById(idComentario);
+    @DeleteMapping("/deletar-comentario/{idComment}")
+    public ResponseEntity<?> delete(@PathVariable("idComment") @Valid @NotNull(message = "Informe o id do comentário!") Long idComment) {
+        service.deleteById(idComment);
         return ResponseEntity.noContent().build();
     }
 

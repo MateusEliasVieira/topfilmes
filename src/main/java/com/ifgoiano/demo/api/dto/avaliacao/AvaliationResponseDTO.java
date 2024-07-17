@@ -14,10 +14,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class AvaliationResponseDTO {
 
-    private Long idAvaliacao;
-    private int pontuacao;
-    private Date dataHora;
+    private Long idAvaliation;
+    private int score;
+    private Date dateHour;
 
     // Relacionamentos
-    private UserResponseDTO usuario;
+    private UserResponseDTO user;
 }
