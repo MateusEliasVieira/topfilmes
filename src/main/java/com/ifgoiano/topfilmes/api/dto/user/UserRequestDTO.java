@@ -1,4 +1,4 @@
-package com.ifgoiano.topfilmes.api.dto.usuario;
+package com.ifgoiano.topfilmes.api.dto.user;
 
 import com.ifgoiano.topfilmes.domain.enums.Roles;
 import jakarta.persistence.Enumerated;
@@ -16,31 +16,26 @@ import java.util.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserWithIDRequestDTO {
+@AllArgsConstructor
+public class UserRequestDTO {
 
-    @NotNull
     private Long idUser;
     @NotBlank
     private String name;
-    @Email
-    @NotBlank
+    @Email @NotBlank
     private String email;
-    @NotBlank
-    @Size(min = 6, max = 20)
+    @NotBlank @Size(min = 6, max = 20)
     private String user;
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank @Size(min = 8)
     private String password;
     @NotNull
-    private Date dateRegister = new Date();
-    @NotNull
     private Date dateOfBirth;
-    @CPF
-    @NotBlank
+    @CPF @NotBlank
     private String cpf;
     @Enumerated
     @NotNull
     private Roles role = Roles.ROLE_USER;
+
+
 }

@@ -49,22 +49,23 @@ public class Movie {
     @ManyToMany
     @JoinTable(
             name = "movie_actor",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id")
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
     )
     private java.util.List<Actor> actors;
 
-    // Relaciona mas não retorna no json
-
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn
     private User user;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "list_id")
-    private List list;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_list",
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
+    )
+    private java.util.List<List> list;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "movies")

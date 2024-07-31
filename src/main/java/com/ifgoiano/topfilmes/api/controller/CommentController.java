@@ -1,7 +1,7 @@
 package com.ifgoiano.topfilmes.api.controller;
 
-import com.ifgoiano.topfilmes.api.dto.comentario.CommentRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.comentario.CommentResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.comment.CommentRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.comment.CommentResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.CommentMapper;
 import com.ifgoiano.topfilmes.domain.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +50,7 @@ public class CommentController {
             @ApiResponse(description = "Comentário foi deletado com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao deletar comentário do filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/deletar-comentario/{idComment}")
+    @DeleteMapping("/delete-comment/{idComment}")
     public ResponseEntity<?> delete(@PathVariable("idComment") @Valid @NotNull(message = "Informe o id do comentário!") Long idComment) {
         service.deleteById(idComment);
         return ResponseEntity.noContent().build();

@@ -50,9 +50,6 @@ public class User {
 
     // Relacionamentos
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Address address;
-
     @OneToOne(mappedBy = "user")
     private List list;
 

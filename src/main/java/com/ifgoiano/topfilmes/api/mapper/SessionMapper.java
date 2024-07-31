@@ -1,7 +1,7 @@
 package com.ifgoiano.topfilmes.api.mapper;
 
-import com.ifgoiano.topfilmes.api.dto.sessao.SessionRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.sessao.SessionResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.session.SessionRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.session.SessionResponseDTO;
 import com.ifgoiano.topfilmes.domain.model.Session;
 import org.modelmapper.ModelMapper;
 

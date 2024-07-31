@@ -42,7 +42,7 @@ public class Cinema {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn
     private User user;
 
 }

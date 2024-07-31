@@ -25,14 +25,14 @@ public class List {
 
     // Relacionamentos
 
-    @OneToMany(mappedBy = "list")
+    @ManyToMany(mappedBy = "list")
     private java.util.List<Movie> movies;
 
     // Relaciona mas não retorna no json
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn
     private User user;
 
 }

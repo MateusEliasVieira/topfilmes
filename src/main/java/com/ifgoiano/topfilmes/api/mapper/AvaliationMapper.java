@@ -1,7 +1,7 @@
 package com.ifgoiano.topfilmes.api.mapper;
 
-import com.ifgoiano.topfilmes.api.dto.avaliacao.AvaliationRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.avaliacao.AvaliationResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationResponseDTO;
 import com.ifgoiano.topfilmes.domain.model.Avaliation;
 import org.modelmapper.ModelMapper;
 

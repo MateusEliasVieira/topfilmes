@@ -31,12 +31,12 @@ public class Avaliation {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn
     private User user;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn
     private Movie movie;
 
 }

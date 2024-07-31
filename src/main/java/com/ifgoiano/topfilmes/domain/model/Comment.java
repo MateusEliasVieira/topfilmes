@@ -31,14 +31,14 @@ public class Comment {
     // Relacionamentos
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn
     private User user;
 
     // Relaciona mas não retorna no json
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn
     private Movie movie;
 
 }

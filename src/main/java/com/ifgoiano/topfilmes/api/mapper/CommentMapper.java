@@ -1,7 +1,7 @@
 package com.ifgoiano.topfilmes.api.mapper;
 
-import com.ifgoiano.topfilmes.api.dto.comentario.CommentRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.comentario.CommentResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.comment.CommentRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.comment.CommentResponseDTO;
 import com.ifgoiano.topfilmes.domain.model.Comment;
 import org.modelmapper.ModelMapper;
 

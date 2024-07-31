@@ -1,8 +1,8 @@
 package com.ifgoiano.topfilmes.api.mapper;
 
-import com.ifgoiano.topfilmes.api.dto.usuario.UserWithIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.usuario.UserRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.usuario.UserResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserWithIDRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserResponseDTO;
 import com.ifgoiano.topfilmes.domain.model.User;
 import org.modelmapper.ModelMapper;
 

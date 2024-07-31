@@ -1,7 +1,7 @@
 package com.ifgoiano.topfilmes.api.controller;
 
-import com.ifgoiano.topfilmes.api.dto.filme.MovieRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.filme.MovieResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.movie.MovieRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.MovieMapper;
 import com.ifgoiano.topfilmes.api.message.MessageResponse;
 import com.ifgoiano.topfilmes.domain.service.MovieService;

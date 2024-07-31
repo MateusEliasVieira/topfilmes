@@ -1,7 +1,7 @@
 package com.ifgoiano.topfilmes.api.controller;
 
-import com.ifgoiano.topfilmes.api.dto.sessao.SessionRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.sessao.SessionResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.session.SessionRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.session.SessionResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.SessionMapper;
 import com.ifgoiano.topfilmes.domain.service.SessionService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,8 +1,8 @@
 package com.ifgoiano.topfilmes.api.controller;
 
-import com.ifgoiano.topfilmes.api.dto.usuario.UserWithIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.usuario.UserRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.usuario.UserResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserWithIDRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.UserMapper;
 import com.ifgoiano.topfilmes.domain.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,7 +62,7 @@ public class UserController {
             @ApiResponse(description = "Usuário encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao encontrar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/buscar/{idUser}")
+    @GetMapping("/find/{idUser}")
     public ResponseEntity<?> searchById(@PathVariable("idUser") @Valid @NotNull(message = "Informe o id do usuário!") Long idUser) {
         return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.searchById(idUser)));
     }
@@ -71,7 +71,7 @@ public class UserController {
             @ApiResponse(description = "Usuários listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao listar usuários!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("listar-todos")
+    @GetMapping("list-all")
     public ResponseEntity<?> listAll() {
         return ResponseEntity.ok(UserMapper.converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(service.listAll()));
     }

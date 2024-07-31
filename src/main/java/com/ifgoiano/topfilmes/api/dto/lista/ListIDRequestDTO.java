@@ -1,4 +1,4 @@
-package com.ifgoiano.topfilmes.api.dto.sessao;
+package com.ifgoiano.topfilmes.api.dto.lista;
 
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import lombok.AllArgsConstructor;
@@ -13,15 +13,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SessionResponseDTO {
+public class ListIDRequestDTO {
 
-    private Long idSessao;
-    private Date horario;
-    private int ingressos;
-    private int sala;
-    private int codSessao;
-
-    // Relacionamentos
-    private List<Movie> movies;
+    private Long idList;
 
 }

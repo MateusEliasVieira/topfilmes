@@ -1,7 +1,5 @@
-package com.ifgoiano.topfilmes.api.dto.sessao;
+package com.ifgoiano.topfilmes.api.dto.session;
 
-import com.ifgoiano.topfilmes.domain.model.Cinema;
-import com.ifgoiano.topfilmes.domain.model.Movie;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +25,4 @@ public class SessionRequestDTO {
     @NotNull
     private int codSession;
 
-    // Relacionamentos
-
-    private List<Movie> movies;
-    private List<Cinema> cinemas;
 }

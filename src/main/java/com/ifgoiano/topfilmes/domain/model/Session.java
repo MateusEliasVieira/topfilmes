@@ -35,8 +35,8 @@ public class Session {
     @ManyToMany
     @JoinTable(
             name = "session_movie",
-            joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
     )
     private List<Movie> movies;
 
@@ -44,8 +44,8 @@ public class Session {
     @ManyToMany
     @JoinTable(
             name = "session_cinema",
-            joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns = @JoinColumn(name = "cinema_id")
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
     )
     private List<Cinema> cinemas;
 
@@ -55,8 +55,8 @@ public class Session {
     @ManyToMany
     @JoinTable(
             name = "session_user",
-            joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
     )
     private List<User> users;
 

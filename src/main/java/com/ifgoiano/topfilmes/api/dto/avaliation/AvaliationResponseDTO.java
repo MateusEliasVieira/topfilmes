@@ -1,6 +1,7 @@
-package com.ifgoiano.topfilmes.api.dto.avaliacao;
+package com.ifgoiano.topfilmes.api.dto.avaliation;
 
-import com.ifgoiano.topfilmes.api.dto.usuario.UserResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,5 @@ public class AvaliationResponseDTO {
 
     // Relacionamentos
     private UserResponseDTO user;
+    private MovieResponseDTO movie;
 }

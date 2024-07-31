@@ -21,7 +21,7 @@ public class LoginController {
             @ApiResponse(description = "Login realizado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = LoginResponseDTO.class))),
             @ApiResponse(description = "Login inválido!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PostMapping("/logar")
+    @PostMapping("/enter")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
 
         return ResponseEntity.ok("Funcionando");
