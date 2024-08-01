@@ -23,9 +23,11 @@ public class CommentRequestDTO {
     @Size(max = 280)
     private String text;
     @NotNull
-    private Date dateHour = new Date();
-    @NotNull
-    private MovieIDRequestDTO movie; // Informa apenas o id do filme de referência
+    private Date dateHour;
+
+
     @NotNull
     private UserIDRequestDTO user; // Informa apenas o id do usuário de referência
+    @NotNull
+    private MovieIDRequestDTO movie; // Informa apenas o id do filme de referência
 }

@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 
 public class SessionMapper {
 
-    public static Session converterSessaoRequestDTOEmSessaoEntidade(SessionRequestDTO sessionRequestDTO) {
+    public static Session convertSessionRequestDTOToSessionEntity(SessionRequestDTO sessionRequestDTO) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(sessionRequestDTO, Session.class);
     }
 
-    public static SessionResponseDTO converterCinemaEntidadeEmCinemaResponseDTO(Session session) {
+    public static SessionResponseDTO convertCinemaEntityToCinemaResponseDTO(Session session) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(session, SessionResponseDTO.class);
     }
 
-    public static List<SessionResponseDTO> converterListaDeSessaoEntidadeParaListaDeSessaoResponseDTO(List<Session> listaSession) {
+    public static List<SessionResponseDTO> convertListSessionEntityToListSessionResponseDTO(List<Session> listSession) {
         ModelMapper modelMapper = new ModelMapper();
-        return listaSession.stream()
-                .map(sessao -> modelMapper.map(sessao, SessionResponseDTO.class))
+        return listSession.stream()
+                .map(session -> modelMapper.map(session, SessionResponseDTO.class))
                 .collect(Collectors.toList());
     }
 

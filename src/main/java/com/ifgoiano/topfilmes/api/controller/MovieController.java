@@ -28,13 +28,13 @@ public class MovieController {
 
     // USER
 
-    @GetMapping("/list")
+    @GetMapping("/list-all")
     @Operation(summary = "Lista filmes", description = "Lista todos os filmes cadastrados", method = "GET", responses = {
             @ApiResponse(description = "Filmes listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Erro ao listar filmes!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     public ResponseEntity<?> listAll() {
-        return ResponseEntity.ok(MovieMapper.converterListaDeFilmeEntidadeParaListaDeFilmeResponseDTO(service.listAll()));
+        return ResponseEntity.ok(MovieMapper.convertListMovieEntityToListMovieResponseDTO(service.listAll()));
     }
 
     // ADMIN
@@ -45,7 +45,7 @@ public class MovieController {
             @ApiResponse(description = "Erro ao cadastrar filme!", responseCode = "500", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MessageResponse.class)))
     })
     public ResponseEntity<?> add(@RequestBody @Valid MovieRequestDTO movieRequestDTO) {
-        return new ResponseEntity<MovieResponseDTO>(MovieMapper.converterFilmeEntidadeParaFilmeResponseDTO(service.add(MovieMapper.converterFilmeRequestDTOParaFilmeEntidade(movieRequestDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<MovieResponseDTO>(MovieMapper.convertMovieEntityToMovieResponseDTO(service.add(MovieMapper.convertMovieRequestDTOToMovieEntity(movieRequestDTO))), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{idMovie}")

@@ -11,25 +11,25 @@ import java.util.stream.Collectors;
 
 public class UserMapper {
 
-    public static User converterUsuarioRequestDTOEmUsuarioEntidade(UserRequestDTO userRequestDTO) {
+    public static User convertUserRequestDTOToUserEntity(UserRequestDTO userRequestDTO) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(userRequestDTO, User.class);
     }
 
-    public static User converterUsuarioComIDRequestDTOEmUsuarioEntidade(UserWithIDRequestDTO userWithIDRequestDTO){
+    public static User convertUserWithIDRequestDTOToUserEntity(UserWithIDRequestDTO userWithIDRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(userWithIDRequestDTO, User.class);
     }
 
-    public static UserResponseDTO converterUsuarioEntidadeParaUsuarioResponseDTO(User user) {
+    public static UserResponseDTO convertUserEntityToUserResponseDTO(User user) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserResponseDTO.class);
     }
 
-    public static List<UserResponseDTO> converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(List<User> listaUser) {
+    public static List<UserResponseDTO> convertListUsersEntityToListUserResponseDTO(List<User> listUser) {
         ModelMapper modelMapper = new ModelMapper();
-        return listaUser.stream()
-                .map(usuario -> modelMapper.map(usuario, UserResponseDTO.class))
+        return listUser.stream()
+                .map(user-> modelMapper.map(user, UserResponseDTO.class))
                 .collect(Collectors.toList());
     }
 }

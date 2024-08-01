@@ -10,19 +10,19 @@ import java.util.stream.Collectors;
 
 public class CinemaMapper {
 
-    public static Cinema converterCinemaRequestDTOEmCinemaEntidade(CinemaRequestDTO cinemaRequestDTO) {
+    public static Cinema convertCinemaRequestDTOToCinemaEntity(CinemaRequestDTO cinemaRequestDTO) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(cinemaRequestDTO, Cinema.class);
     }
 
-    public static CinemaResponseDTO converterCinemaEntidadeEmCinemaResponseDTO(Cinema cinema) {
+    public static CinemaResponseDTO convertCinemaEntityToCinemaResponseDTO(Cinema cinema) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(cinema, CinemaResponseDTO.class);
     }
 
-    public static List<CinemaResponseDTO> converterListaDeCinemaEntidadeParaListaDeCinemaResponseDTO(List<Cinema> listaCinema) {
+    public static List<CinemaResponseDTO> convertListCinemaEntityToListCinemaResponseDTO(List<Cinema> listCinema) {
         ModelMapper modelMapper = new ModelMapper();
-        return listaCinema.stream()
+        return listCinema.stream()
                 .map(cinema -> modelMapper.map(cinema, CinemaResponseDTO.class))
                 .collect(Collectors.toList());
     }

@@ -3,7 +3,7 @@ package com.ifgoiano.topfilmes.api.dto.movie;
 import com.ifgoiano.topfilmes.api.dto.actor.ActorIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.comment.CommentIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.lista.ListIDRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.list.ListIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.session.SessionIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.user.UserIDRequestDTO;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
@@ -50,10 +50,5 @@ public class MovieRequestDTO {
 
     @NotNull
     private UserIDRequestDTO user;
-    private ListIDRequestDTO list;
-    private ActorIDRequestDTO actor;
-    private SessionIDRequestDTO session;
-    private CommentIDRequestDTO comment;
-    private AvaliationIDRequestDTO avaliation;
 
 }

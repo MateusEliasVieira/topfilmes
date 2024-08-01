@@ -1,6 +1,8 @@
 package com.ifgoiano.topfilmes.api.dto.user;
 
 import com.ifgoiano.topfilmes.domain.enums.Roles;
+import com.ifgoiano.topfilmes.utils.PersonalizedResponse;
+import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,21 +23,25 @@ import java.util.Date;
 public class UserRequestDTO {
 
     private Long idUser;
-    @NotBlank
+    @NotBlank(message = PersonalizedResponse.USUARIO_ATR_NOME_VAZIO)
     private String name;
-    @Email @NotBlank
+    @Email
+    @NotBlank(message = PersonalizedResponse.USUARIO_ATR_EMAIL_VAZIO)
     private String email;
-    @NotBlank @Size(min = 6, max = 20)
+    @NotBlank(message = PersonalizedResponse.USUARIO_ATR_USUARIO_VAZIO)
+    @Size(min = 6, max = 20)
     private String user;
-    @NotBlank @Size(min = 8)
+    @NotBlank(message = PersonalizedResponse.USUARIO_ATR_SENHA_VAZIO)
+    @Size(min = 8)
     private String password;
-    @NotNull
+    @NotNull(message = PersonalizedResponse.USUARIO_ATR_DATANASCIMENTO_VAZIO)
     private Date dateOfBirth;
-    @CPF @NotBlank
+    @CPF
+    @Column(unique = true)
     private String cpf;
     @Enumerated
     @NotNull
-    private Roles role = Roles.ROLE_USER;
+    private Roles role;
 
 
 }

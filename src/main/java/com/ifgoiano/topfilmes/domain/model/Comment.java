@@ -1,5 +1,6 @@
 package com.ifgoiano.topfilmes.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -22,11 +23,9 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idComments;
-    @NotBlank
     @Size(max = 280)
     private String text;
-    @NotNull
-    private Date dateHour;
+    private Date dateHour = new Date();
 
     // Relacionamentos
 
@@ -36,7 +35,6 @@ public class Comment {
 
     // Relaciona mas não retorna no json
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn
     private Movie movie;

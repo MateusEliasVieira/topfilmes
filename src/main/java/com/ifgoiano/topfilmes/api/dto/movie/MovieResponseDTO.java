@@ -3,7 +3,7 @@ package com.ifgoiano.topfilmes.api.dto.movie;
 import com.ifgoiano.topfilmes.api.dto.actor.ActorResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.comment.CommentResponseDTO;
-import com.ifgoiano.topfilmes.api.dto.lista.ListResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.list.ListResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.session.SessionResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.user.UserResponseDTO;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
@@ -32,11 +32,7 @@ public class MovieResponseDTO {
     private int classification;
     private String distributor;
 
-    // Relacionamentos
-    private UserResponseDTO user;
-    private List<ListResponseDTO> lists;
     private List<ActorResponseDTO> actors;
-    private List<SessionResponseDTO> sessions;
     private List<CommentResponseDTO> comments;
     private List<AvaliationResponseDTO> avaliations;
 

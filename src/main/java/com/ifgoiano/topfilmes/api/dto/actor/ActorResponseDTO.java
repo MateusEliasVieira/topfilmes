@@ -17,5 +17,4 @@ public class ActorResponseDTO {
     private Long idActor;
     private String name;
     private Date dateOfBirth;
-    private List<MovieResponseDTO> movies;
 }

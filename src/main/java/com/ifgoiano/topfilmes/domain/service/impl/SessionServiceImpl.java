@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -24,18 +25,21 @@ public class SessionServiceImpl implements SessionService {
     @Transactional(readOnly = false)
     @Override
     public Session add(Session session) {
-        Session sessionSalva = repository.save(session);
-        List<Movie> listaDeMovies = new ArrayList<Movie>();
-        for (int i = 0; i < sessionSalva.getMovies().size(); i++) {
-            listaDeMovies.add(movieRepository.findById(session.getMovies().get(i).getIdMovie()).orElseThrow(() -> new BusinessRulesException("Não foi possível adicionar um filme na lista de filmes, pois o id desse filme é inválido!")));
-        }
-        sessionSalva.setMovies(listaDeMovies);
-        return sessionSalva;
+        if(repository.findByCodSession(session.getCodSession()).isPresent())
+            throw new BusinessRulesException("Já existe uma sessão com o código "+session.getCodSession());
+
+        return repository.save(session);
     }
 
     @Transactional(readOnly = false)
     @Override
     public Session update(Session session) {
+        Optional<Session> sessionFound = repository.findByCodSession(session.getCodSession());
+
+        if(sessionFound.isPresent())
+            if(sessionFound.get().getIdSession() != session.getIdSession())
+                throw new BusinessRulesException("Já existe uma sessão com o código "+session.getCodSession());
+
         return repository.save(session);
     }
 

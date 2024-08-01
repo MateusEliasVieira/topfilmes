@@ -1,6 +1,8 @@
 package com.ifgoiano.topfilmes.api.dto.actor;
 
 import com.ifgoiano.topfilmes.api.dto.movie.MovieIDRequestDTO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +17,9 @@ import java.util.Date;
 public class ActorRequestDTO {
 
     private Long idActor;
+    @NotBlank
     private String name;
+    @NotNull
     private Date dateOfBirth;
-    private MovieIDRequestDTO movie; // Informa apenas o id do filme de referência
 
 }

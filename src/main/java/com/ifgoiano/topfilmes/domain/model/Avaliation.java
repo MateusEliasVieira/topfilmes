@@ -1,5 +1,6 @@
 package com.ifgoiano.topfilmes.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -20,21 +21,17 @@ public class Avaliation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAvaliation;
-    @NotNull
     private int score;
-    @NotNull
-    private Date dateHour;
+    private Date dateHour = new Date();
 
     // Relacionamentos
 
     // Relaciona mas não retorna no json
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn
     private User user;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn
     private Movie movie;

@@ -33,7 +33,7 @@ public class SessionController {
     })
     @GetMapping("/list-all")
     public ResponseEntity<?> listAll(){
-        return ResponseEntity.ok(SessionMapper.converterListaDeSessaoEntidadeParaListaDeSessaoResponseDTO(service.listAll()));
+        return ResponseEntity.ok(SessionMapper.convertListSessionEntityToListSessionResponseDTO(service.listAll()));
     }
 
     // ADMIN
@@ -44,14 +44,23 @@ public class SessionController {
     })
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody @Valid SessionRequestDTO sessionRequestDTO){
-        return new ResponseEntity<SessionResponseDTO>(SessionMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.add(SessionMapper.converterSessaoRequestDTOEmSessaoEntidade(sessionRequestDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<SessionResponseDTO>(SessionMapper.convertCinemaEntityToCinemaResponseDTO(service.add(SessionMapper.convertSessionRequestDTOToSessionEntity(sessionRequestDTO))), HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Atualiza uma sessão", description = "Atualiza uma sessão existente", method = "PUT", responses = {
+            @ApiResponse(description = "Atualização realizada com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SessionResponseDTO.class))),
+            @ApiResponse(description = "Houve um erro ao atualizar a sessão!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody @Valid SessionRequestDTO sessionRequestDTO){
+        return new ResponseEntity<SessionResponseDTO>(SessionMapper.convertCinemaEntityToCinemaResponseDTO(service.update(SessionMapper.convertSessionRequestDTOToSessionEntity(sessionRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Deleta sessões", description = "Realiza a remoção de sessões pelo id", method = "DELETE", responses = {
             @ApiResponse(description = "Remoção realizada com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Não foi possível deletar a sessão!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/delete-session/{idSession}")
+    @DeleteMapping("/delete/{idSession}")
     public ResponseEntity<?> delete(@PathVariable("idSession") @Valid @NotNull(message = "Informe o id da sessão!") Long idSession){
         service.deleteById(idSession);
         return ResponseEntity.noContent().build();

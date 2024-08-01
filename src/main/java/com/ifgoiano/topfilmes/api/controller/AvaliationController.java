@@ -33,7 +33,7 @@ public class AvaliationController {
     })
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody @Valid AvaliationRequestDTO avaliationRequestDTO){
-        return new ResponseEntity<AvaliationResponseDTO>(AvaliationMapper.converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(service.add(AvaliationMapper.converterAvaliacaoRequestDTOEmAvaliacaoEntidade(avaliationRequestDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<AvaliationResponseDTO>(AvaliationMapper.convertAvaliationEntityToAvaliationResponseDTO(service.add(AvaliationMapper.convertAvaliationRequestDTOToAvaliationEntity(avaliationRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Lista avaliações", description = "Realiza a listagem de todas avaliações", method = "GET", responses = {
@@ -42,7 +42,7 @@ public class AvaliationController {
     })
     @GetMapping("/list-all")
     public ResponseEntity<?> listAll(){
-        return ResponseEntity.ok(AvaliationMapper.converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(service.listAll()));
+        return ResponseEntity.ok(AvaliationMapper.convertListAvaliationEntityToListAvaliationResponseDTO(service.listAll()));
     }
 
     // ADMIN

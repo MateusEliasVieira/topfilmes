@@ -1,5 +1,7 @@
 package com.ifgoiano.topfilmes.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -22,27 +24,22 @@ public class Movie {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMovie;
-    @NotBlank
     private String title;
-    @NotBlank
     private String director;
-    @Enumerated @NotNull
+    @Enumerated
     private Gender gender;
-    @NotBlank @Size(max = 280)
+    @Size(max = 280)
     private String sinopse;
     private Date launch;
-    @NotNull
     private int duration;
-    @NotNull
     private int classification;
-    @NotBlank
     private String distributor;
 
     // Relacionamentos
 
     @OneToMany(mappedBy = "movie")
     private java.util.List<Avaliation> avaliations;
-
+ 
     @OneToMany(mappedBy = "movie")
     private java.util.List<Comment> comments;
 
@@ -53,12 +50,11 @@ public class Movie {
             inverseJoinColumns = @JoinColumn
     )
     private java.util.List<Actor> actors;
-
-    @JsonIgnore
+    
     @ManyToOne
     @JoinColumn
     private User user;
-
+ 
     @ManyToMany
     @JoinTable(
             name = "movie_list",
@@ -67,7 +63,6 @@ public class Movie {
     )
     private java.util.List<List> list;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "movies")
     private java.util.List<Session> sessions;
 

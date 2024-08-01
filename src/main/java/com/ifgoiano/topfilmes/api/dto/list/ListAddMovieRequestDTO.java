@@ -1,7 +1,8 @@
-package com.ifgoiano.topfilmes.api.dto.lista;
+package com.ifgoiano.topfilmes.api.dto.list;
 
 import com.ifgoiano.topfilmes.api.dto.movie.MovieIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.user.UserRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.user.UserIDRequestDTO;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,13 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListRequestDTO {
+public class ListAddMovieRequestDTO {
 
     private Long idList;
-    private Date addition = new Date();
+    private Date addition;
 
     // Relacionamentos
-    private UserRequestDTO user; // Informa apenas o id do usuário de referência
+    @NotNull
+    private UserIDRequestDTO user; // Informa apenas o id do usuário de referência
     private MovieIDRequestDTO movie; // Informa apenas o id do filme de referência
 }

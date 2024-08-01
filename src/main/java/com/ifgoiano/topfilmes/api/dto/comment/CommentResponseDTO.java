@@ -19,8 +19,4 @@ public class CommentResponseDTO {
     private String text;
     private Date dateHour;
 
-    // Relacionamento
-    private UserResponseDTO user;
-    private MovieResponseDTO movie;
-
 }

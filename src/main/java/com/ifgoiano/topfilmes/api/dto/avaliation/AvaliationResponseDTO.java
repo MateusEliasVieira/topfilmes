@@ -19,7 +19,4 @@ public class AvaliationResponseDTO {
     private int score;
     private Date dateHour;
 
-    // Relacionamentos
-    private UserResponseDTO user;
-    private MovieResponseDTO movie;
 }

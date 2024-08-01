@@ -32,7 +32,7 @@ public class CommentController {
     })
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody @Valid CommentRequestDTO commentRequestDTO) {
-        return new ResponseEntity<CommentResponseDTO>(CommentMapper.converterComentarioEntidadeEmComentarioResponseDTO(service.comment(CommentMapper.converterComentarioRequestDTOEmComentarioEntidade(commentRequestDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<CommentResponseDTO>(CommentMapper.convertCommentEntityToCommentResponseDTO(service.comment(CommentMapper.convertCommentRequestDTOToCommentEntity(commentRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Lista comentários", description = "Lista todos os comentários de um determinado filme cadastrado", method = "GET", responses = {
@@ -41,7 +41,7 @@ public class CommentController {
     })
     @GetMapping("/list-all")
     public ResponseEntity<?> listAll() {
-        return ResponseEntity.ok(CommentMapper.converterListaDeComentarioEntidadeParaListaDeComentarioResponseDTO(service.listAll()));
+        return ResponseEntity.ok(CommentMapper.convertListCommentEntityToListCommentResponseDTO(service.listAll()));
     }
 
     // ADMIN
@@ -50,7 +50,7 @@ public class CommentController {
             @ApiResponse(description = "Comentário foi deletado com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao deletar comentário do filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @DeleteMapping("/delete-comment/{idComment}")
+    @DeleteMapping("/delete/{idComment}")
     public ResponseEntity<?> delete(@PathVariable("idComment") @Valid @NotNull(message = "Informe o id do comentário!") Long idComment) {
         service.deleteById(idComment);
         return ResponseEntity.noContent().build();

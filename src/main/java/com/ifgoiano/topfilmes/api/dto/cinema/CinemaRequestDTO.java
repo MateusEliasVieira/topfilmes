@@ -29,6 +29,6 @@ public class CinemaRequestDTO {
     @CNPJ
     private String cnpj;
 
+    @NotNull
     private UserIDRequestDTO user; // Informa apenas o id do usuário de referência
-    private SessionIDRequestDTO session; // Informa apenas o id da sessão de referência
 }

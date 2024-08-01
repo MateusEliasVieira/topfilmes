@@ -10,19 +10,19 @@ import java.util.stream.Collectors;
 
 public class CommentMapper {
 
-    public static Comment converterComentarioRequestDTOEmComentarioEntidade(CommentRequestDTO commentRequestDTO){
+    public static Comment convertCommentRequestDTOToCommentEntity(CommentRequestDTO commentRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(commentRequestDTO, Comment.class);
     }
 
-    public static CommentResponseDTO converterComentarioEntidadeEmComentarioResponseDTO(Comment comment){
+    public static CommentResponseDTO convertCommentEntityToCommentResponseDTO(Comment comment){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(comment, CommentResponseDTO.class);
     }
-    public static List<CommentResponseDTO> converterListaDeComentarioEntidadeParaListaDeComentarioResponseDTO(List<Comment> listaComment) {
+    public static List<CommentResponseDTO> convertListCommentEntityToListCommentResponseDTO(List<Comment> listComment) {
         ModelMapper modelMapper = new ModelMapper();
-        return listaComment.stream()
-                .map(comentario -> modelMapper.map(comentario, CommentResponseDTO.class))
+        return listComment.stream()
+                .map(comment -> modelMapper.map(comment, CommentResponseDTO.class))
                 .collect(Collectors.toList());
     }
 }

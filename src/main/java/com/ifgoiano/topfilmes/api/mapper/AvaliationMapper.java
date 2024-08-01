@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 
 public class AvaliationMapper {
 
-    public static Avaliation converterAvaliacaoRequestDTOEmAvaliacaoEntidade(AvaliationRequestDTO avaliationRequestDTO){
+    public static Avaliation convertAvaliationRequestDTOToAvaliationEntity(AvaliationRequestDTO avaliationRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(avaliationRequestDTO, Avaliation.class);
     }
 
-    public static AvaliationResponseDTO converterAvaliacaoEntidadeEmAvaliacaoResponseDTO(Avaliation avaliation){
+    public static AvaliationResponseDTO convertAvaliationEntityToAvaliationResponseDTO(Avaliation avaliation){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(avaliation, AvaliationResponseDTO.class);
     }
 
-    public static List<AvaliationResponseDTO> converterListaDeAvaliacaoEntidadeParaListaDeAvaliacaoResponseDTO(List<Avaliation> listaAvaliation) {
+    public static List<AvaliationResponseDTO> convertListAvaliationEntityToListAvaliationResponseDTO(List<Avaliation> listAvaliation) {
         ModelMapper modelMapper = new ModelMapper();
-        return listaAvaliation.stream()
-                .map(avaliacao -> modelMapper.map(avaliacao, AvaliationResponseDTO.class))
+        return listAvaliation.stream()
+                .map(avaliation -> modelMapper.map(avaliation, AvaliationResponseDTO.class))
                 .collect(Collectors.toList());
     }
     

@@ -24,7 +24,6 @@ public class CinemaResponseDTO {
     private String cnpj;
 
     // Relacionamentos
-    private UserResponseDTO user;
     private List<SessionResponseDTO> sessions;
 
 }

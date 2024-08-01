@@ -4,8 +4,7 @@ import com.ifgoiano.topfilmes.api.dto.actor.ActorResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.cinema.CinemaResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.comment.CommentResponseDTO;
-import com.ifgoiano.topfilmes.api.dto.lista.ListResponseDTO;
-import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.list.ListResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.session.SessionResponseDTO;
 import com.ifgoiano.topfilmes.domain.enums.Roles;
 import lombok.AllArgsConstructor;
@@ -32,11 +31,6 @@ public class UserResponseDTO {
 
     // Relacionamentos
     private ListResponseDTO list;
-    private List<ActorResponseDTO> actors;
-    private List<MovieResponseDTO> movies;
-    private List<SessionResponseDTO> sessions;
-    private List<CinemaResponseDTO> cinemas;
-    private List<CommentResponseDTO> comments;
-    private List<AvaliationResponseDTO> avaliations;
+
 
 }

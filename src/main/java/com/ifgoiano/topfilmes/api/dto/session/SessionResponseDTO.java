@@ -20,13 +20,12 @@ import java.util.List;
 public class SessionResponseDTO {
 
     private Long idSession;
-    private Date time;
+    private Date start;
+    private Date end;
     private int tickets;
     private int room;
     private int codSession;
 
-    // Relacionamentos
-    private UserResponseDTO user;
     private List<MovieResponseDTO> movies;
     private List<CinemaResponseDTO> cinemas;
 

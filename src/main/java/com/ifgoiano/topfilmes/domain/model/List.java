@@ -1,6 +1,7 @@
 package com.ifgoiano.topfilmes.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,7 @@ public class List {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idList;
-    @NotNull
-    private Date addition;
+    private Date addition = new Date();
 
     // Relacionamentos
 
@@ -30,7 +30,6 @@ public class List {
 
     // Relaciona mas não retorna no json
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn
     private User user;

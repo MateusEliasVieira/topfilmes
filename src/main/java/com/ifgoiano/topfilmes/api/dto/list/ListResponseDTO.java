@@ -1,5 +1,6 @@
-package com.ifgoiano.topfilmes.api.dto.lista;
+package com.ifgoiano.topfilmes.api.dto.list;
 
+import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +14,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListIDRequestDTO {
+public class ListResponseDTO {
 
     private Long idList;
+    private Date addition;
 
+    // Relacionamentos
+    private List<MovieResponseDTO> movies;
 }

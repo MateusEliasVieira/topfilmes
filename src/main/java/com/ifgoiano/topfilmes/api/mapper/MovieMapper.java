@@ -10,20 +10,21 @@ import java.util.stream.Collectors;
 
 public class MovieMapper {
 
-    public static Movie converterFilmeRequestDTOParaFilmeEntidade(MovieRequestDTO movieRequestDTO){
+    public static Movie convertMovieRequestDTOToMovieEntity(MovieRequestDTO movieRequestDTO){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(movieRequestDTO, Movie.class);
     }
 
-    public static MovieResponseDTO converterFilmeEntidadeParaFilmeResponseDTO(Movie movie){
+
+    public static MovieResponseDTO convertMovieEntityToMovieResponseDTO(Movie movie){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(movie, MovieResponseDTO.class);
     }
 
-    public static List<MovieResponseDTO> converterListaDeFilmeEntidadeParaListaDeFilmeResponseDTO(List<Movie> listaMovie) {
+    public static List<MovieResponseDTO> convertListMovieEntityToListMovieResponseDTO(List<Movie> listMovie) {
         ModelMapper modelMapper = new ModelMapper();
-        return listaMovie.stream()
-                .map(filme -> modelMapper.map(filme, MovieResponseDTO.class))
+        return listMovie.stream()
+                .map(movie -> modelMapper.map(movie, MovieResponseDTO.class))
                 .collect(Collectors.toList());
     }
 

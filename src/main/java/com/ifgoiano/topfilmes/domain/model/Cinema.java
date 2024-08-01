@@ -1,5 +1,6 @@
 package com.ifgoiano.topfilmes.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -22,25 +23,19 @@ public class Cinema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCinema;
-    @NotBlank
     private String name;
-    @NotBlank
     private String address;
-    @NotBlank
     private String operation;
-    @NotNull
     private int rooms;
     @CNPJ
     private String cnpj;
 
     // Relacionamentos
-
     @ManyToMany(mappedBy = "cinemas")
     private List<Session> sessions;
 
     // Relaciona mas não retorna no json
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn
     private User user;

@@ -32,7 +32,7 @@ public class CinemaController {
     })
     @GetMapping("/list-all")
     public ResponseEntity<?> listAll(){
-        return ResponseEntity.ok(CinemaMapper.converterListaDeCinemaEntidadeParaListaDeCinemaResponseDTO(service.listAll()));
+        return ResponseEntity.ok(CinemaMapper.convertListCinemaEntityToListCinemaResponseDTO(service.listAll()));
     }
 
     // ADMIN
@@ -43,7 +43,7 @@ public class CinemaController {
     })
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody @Valid CinemaRequestDTO cinemaRequestDTO){
-        return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.converterCinemaEntidadeEmCinemaResponseDTO(service.add(CinemaMapper.converterCinemaRequestDTOEmCinemaEntidade(cinemaRequestDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.convertCinemaEntityToCinemaResponseDTO(service.add(CinemaMapper.convertCinemaRequestDTOToCinemaEntity(cinemaRequestDTO))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Deleta um cinema", description = "Realiza a remoção de um cinema pelo id", method = "DELETE", responses = {

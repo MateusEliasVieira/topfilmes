@@ -33,7 +33,7 @@ public class UserController {
     })
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody @Valid UserRequestDTO userRequestDTO) {
-        UserResponseDTO userResponseDTO = UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.add(UserMapper.converterUsuarioRequestDTOEmUsuarioEntidade(userRequestDTO)));
+        UserResponseDTO userResponseDTO = UserMapper.convertUserEntityToUserResponseDTO(service.add(UserMapper.convertUserRequestDTOToUserEntity(userRequestDTO)));
         return new ResponseEntity<UserResponseDTO>(userResponseDTO, HttpStatus.CREATED);
     }
 
@@ -45,7 +45,7 @@ public class UserController {
     })
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody @Valid UserWithIDRequestDTO userWithIDRequestDTO) {
-        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.update(UserMapper.converterUsuarioComIDRequestDTOEmUsuarioEntidade(userWithIDRequestDTO))));
+        return ResponseEntity.ok(UserMapper.convertUserEntityToUserResponseDTO(service.update(UserMapper.convertUserWithIDRequestDTOToUserEntity(userWithIDRequestDTO))));
     }
 
     @Operation(summary = "Deleta usuários", description = "Realiza a remoção de um usuário por id", method = "DELETE", responses = {
@@ -64,7 +64,7 @@ public class UserController {
     })
     @GetMapping("/find/{idUser}")
     public ResponseEntity<?> searchById(@PathVariable("idUser") @Valid @NotNull(message = "Informe o id do usuário!") Long idUser) {
-        return ResponseEntity.ok(UserMapper.converterUsuarioEntidadeParaUsuarioResponseDTO(service.searchById(idUser)));
+        return ResponseEntity.ok(UserMapper.convertUserEntityToUserResponseDTO(service.searchById(idUser)));
     }
 
     @Operation(summary = "Lista usuários", description = "Realiza a listagem de todos os usuários cadastrados", method = "GET", responses = {
@@ -73,7 +73,7 @@ public class UserController {
     })
     @GetMapping("list-all")
     public ResponseEntity<?> listAll() {
-        return ResponseEntity.ok(UserMapper.converterListaDeUsuariosEntidadeParaListaDeUsuarioResponseDTO(service.listAll()));
+        return ResponseEntity.ok(UserMapper.convertListUsersEntityToListUserResponseDTO(service.listAll()));
     }
 
 }

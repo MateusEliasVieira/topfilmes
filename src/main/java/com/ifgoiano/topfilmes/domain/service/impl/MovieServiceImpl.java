@@ -39,4 +39,9 @@ public class MovieServiceImpl implements MovieService {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Movie searchById(Long idMovie) {
+        return repository.findById(idMovie).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado o filme com o id "+idMovie);});
+    }
 }
