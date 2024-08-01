@@ -41,7 +41,7 @@ public class MovieRequestDTO {
     private Date launch;
     @NotNull(message = PersonalizedResponse.FILME_ATR_DURACAO_NULO)
     @Positive(message = PersonalizedResponse.FILME_ATR_DURACAO_POSITIVO)
-    private int duration;
+    private double duration;
     @NotNull(message = PersonalizedResponse.FILME_ATR_CLASSIFICACAO_NULO)
     private int classification;
     @NotBlank(message = PersonalizedResponse.FILME_ATR_DISTRIBUIDORA_VAZIO)

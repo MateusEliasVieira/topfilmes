@@ -24,6 +24,7 @@ public class Movie {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMovie;
+    @Column(unique = true)
     private String title;
     private String director;
     @Enumerated
@@ -31,7 +32,7 @@ public class Movie {
     @Size(max = 280)
     private String sinopse;
     private Date launch;
-    private int duration;
+    private double duration;
     private int classification;
     private String distributor;
 

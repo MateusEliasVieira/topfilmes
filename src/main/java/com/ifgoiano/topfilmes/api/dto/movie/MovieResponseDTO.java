@@ -28,7 +28,7 @@ public class MovieResponseDTO {
     private Gender gender;
     private String sinopse;
     private Date launch;
-    private int duration;
+    private double duration;
     private int classification;
     private String distributor;
 
