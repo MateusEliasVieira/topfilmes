@@ -8,6 +8,8 @@ import com.ifgoiano.topfilmes.domain.repository.CommentRepository;
 import com.ifgoiano.topfilmes.domain.repository.MovieRepository;
 import com.ifgoiano.topfilmes.domain.repository.UserRepository;
 import com.ifgoiano.topfilmes.domain.service.CommentService;
+import com.ifgoiano.topfilmes.domain.service.MovieService;
+import com.ifgoiano.topfilmes.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,42 +21,45 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentRepository repository;
+
     @Autowired
-    private MovieRepository movieRepository;
+    private UserService userService;
+
     @Autowired
-    private UserRepository userRepository;
+    private MovieService movieService;
 
     @Transactional(readOnly = false)
     @Override
     public Comment comment(Comment comment) {
-        Comment commentSalvo = repository.save(comment);
-        Movie movie = movieRepository.findById(commentSalvo.getMovie().getIdMovie()).orElseThrow(() -> new BusinessRulesException("Não foi possível vincular o filme ao comentário, pois o id do filme é inválido!"));
-        User user = userRepository.findById(commentSalvo.getUser().getIdUser()).orElseThrow(() -> new BusinessRulesException("Não foi possível vincular o usuário ao comentário, pois o id do usuário é inválido!"));
-        commentSalvo.setMovie(movie);
-        commentSalvo.setUser(user);
-        return commentSalvo;
+        Movie movie = movieService.searchById(comment.getMovie().getIdMovie());
+        User user = userService.searchById(comment.getUser().getIdUser());
+        comment.setMovie(movie);
+        comment.setUser(user);
+        
+        return repository.save(comment);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Comment> listAll() {
-        return repository.findAll();
+    public List<Comment> listById(Long idMovie) {
+        List<Comment> comments = movieService.searchById(idMovie).getComments();
+        return comments;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Comment searchById(Long idComentario) {
-        return repository.findById(idComentario).orElseThrow(() -> new BusinessRulesException("Não existe comentário com id " + idComentario + "!"));
+    public Comment searchById(Long idComment) {
+        return repository.findById(idComment).orElseThrow(() -> new BusinessRulesException("Não existe comentário com id " + idComment + "!"));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deleteById(Long idComentario) {
+    public void deleteById(Long idComment) {
         try {
-            searchById(idComentario);
-            repository.deleteById(idComentario);
+            searchById(idComment);
+            repository.deleteById(idComment);
         } catch (BusinessRulesException businessRulesException) {
-            throw new BusinessRulesException("Não existe comentário com id " + idComentario + " para ser deletado!");
+            throw new BusinessRulesException("Não existe comentário com id " + idComment + " para ser deletado!");
         }
     }
 

@@ -46,6 +46,24 @@ public class CinemaController {
         return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.convertCinemaEntityToCinemaResponseDTO(service.add(CinemaMapper.convertCinemaRequestDTOToCinemaEntity(cinemaRequestDTO))), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Atualiza cinema", description = "Atualiza o cadastro de cinema", method = "PUT", responses = {
+            @ApiResponse(description = "Cadastro atualizado com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CinemaResponseDTO.class))),
+            @ApiResponse(description = "Não foi possível atualizar o cinema!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody @Valid CinemaRequestDTO cinemaRequestDTO){
+        return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.convertCinemaEntityToCinemaResponseDTO(service.update(CinemaMapper.convertCinemaRequestDTOToCinemaEntity(cinemaRequestDTO))), HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Lista cinema", description = "Lista um cinema por id", method = "GET", responses = {
+            @ApiResponse(description = "Cinema encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CinemaResponseDTO.class))),
+            @ApiResponse(description = "Não foi possível encontrar o cinema!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    @GetMapping("/list/{idCinema}")
+    public ResponseEntity<?> update(@PathVariable("idCinema") Long idCinema){
+        return new ResponseEntity<CinemaResponseDTO>(CinemaMapper.convertCinemaEntityToCinemaResponseDTO(service.searchById(idCinema)), HttpStatus.OK);
+    }
+
     @Operation(summary = "Deleta um cinema", description = "Realiza a remoção de um cinema pelo id", method = "DELETE", responses = {
             @ApiResponse(description = "Remoção realizada com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Não foi possível remover um filme", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))

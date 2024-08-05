@@ -35,8 +35,6 @@ public class Cinema {
     @ManyToMany(mappedBy = "cinemas")
     private List<Session> sessions = new ArrayList<>();
 
-    // Relaciona mas não retorna no json
-
     @ManyToOne
     @JoinColumn
     private User user;

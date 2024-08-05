@@ -8,7 +8,7 @@ public interface CommentService {
 
     public Comment comment(Comment comment);
 
-    public List<Comment> listAll();
+    public List<Comment> listById(Long idMovie);
 
     public Comment searchById(Long idComment);
 

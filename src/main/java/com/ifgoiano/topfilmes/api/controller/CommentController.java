@@ -35,13 +35,13 @@ public class CommentController {
         return new ResponseEntity<CommentResponseDTO>(CommentMapper.convertCommentEntityToCommentResponseDTO(service.comment(CommentMapper.convertCommentRequestDTOToCommentEntity(commentRequestDTO))), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Lista comentários", description = "Lista todos os comentários de um determinado filme cadastrado", method = "GET", responses = {
+    @Operation(summary = "Lista comentários de um filme", description = "Lista todos os comentários de um determinado filme cadastrado", method = "GET", responses = {
             @ApiResponse(description = "Comentários do filme listados com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
             @ApiResponse(description = "Erro ao listar comentários do filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/list-all")
-    public ResponseEntity<?> listAll() {
-        return ResponseEntity.ok(CommentMapper.convertListCommentEntityToListCommentResponseDTO(service.listAll()));
+    @GetMapping("/list/{idMovie}")
+    public ResponseEntity<?> listAll(@PathVariable("idMovie") Long idMovie) {
+        return ResponseEntity.ok(CommentMapper.convertListCommentEntityToListCommentResponseDTO(service.listById(idMovie)));
     }
 
     // ADMIN

@@ -14,15 +14,12 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListAddMovieRequestDTO {
+public class ListRemoveMovieRequestDTO {
 
     @NotNull
     private Long idList;
-    private Date addition;
 
     // Relacionamentos
-    @NotNull
-    private UserIDRequestDTO user; // Informa apenas o id do usuário de referência
     @NotNull
     private MovieIDRequestDTO movie; // Informa apenas o id do filme de referência
 }
