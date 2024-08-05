@@ -25,6 +25,6 @@ public class Actor {
     private Date dateOfBirth;
 
     @ManyToMany(mappedBy = "actors")
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 
 }

@@ -1,16 +1,11 @@
 package com.ifgoiano.topfilmes.domain.service.impl;
 
 import com.ifgoiano.topfilmes.api.dto.list.ListAddMovieRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.list.ListIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.list.ListRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.movie.MovieIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.movie.MovieRequestDTO;
 import com.ifgoiano.topfilmes.domain.domainException.BusinessRulesException;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import com.ifgoiano.topfilmes.domain.model.List;
 import com.ifgoiano.topfilmes.domain.repository.MovieRepository;
 import com.ifgoiano.topfilmes.domain.repository.ListRepository;
-import com.ifgoiano.topfilmes.domain.repository.UserRepository;
 import com.ifgoiano.topfilmes.domain.service.ListService;
 import com.ifgoiano.topfilmes.domain.service.MovieService;
 import com.ifgoiano.topfilmes.domain.service.UserService;
@@ -19,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class ListServiceImpl implements ListService {
@@ -46,15 +40,36 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public List addMovieToList(ListAddMovieRequestDTO listAddMovieRequestDTO) {
+//        {
+//            "idList": 1,
+//                "addition": "2024-08-05T13:01:06.739Z",
+//                "user": {
+//            "idUser": 2
+//        },
+//            "movie": {
+//            "idMovie": 2
+//        }
+//        }
 
         List list = searchById(listAddMovieRequestDTO.getIdList()); // se passar, existe!
-        java.util.List<Movie> movies = new ArrayList<>();
 
         if(listAddMovieRequestDTO.getMovie().equals(null)) throw new BusinessRulesException("Informe o filme para ser adicionado a lista!");
 
-        movies.add(movieService.searchById(listAddMovieRequestDTO.getMovie().getIdMovie()));
+        // verifica se o usuário passado é o mesmo usuário dono da lista
+        if(list.getUser().getIdUser() != listAddMovieRequestDTO.getUser().getIdUser())
+            throw new BusinessRulesException("Não é permitido o usuário "
+                    +userService.searchById(listAddMovieRequestDTO.getUser().getIdUser()).getName()+
+                    " adicionar filmes na lista do usuário "
+                    +userService.searchById(list.getUser().getIdUser()).getName()+"!");
 
-         list.setMovies(movies);
+        // verifica se o filme já não foi adicionado a lista
+        list.getMovies().forEach((movie)->{
+            if (movie.getIdMovie() == listAddMovieRequestDTO.getMovie().getIdMovie()) throw new BusinessRulesException("Você já adicionou esse filme a lista!");
+        });
+
+        Movie movie = movieService.searchById(listAddMovieRequestDTO.getMovie().getIdMovie());
+        list.getMovies().add(movie);
+        movie.setList(java.util.List.of(list));
 
         return repository.save(list);
 

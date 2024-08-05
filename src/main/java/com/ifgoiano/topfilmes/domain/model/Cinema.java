@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -32,7 +33,7 @@ public class Cinema {
 
     // Relacionamentos
     @ManyToMany(mappedBy = "cinemas")
-    private List<Session> sessions;
+    private List<Session> sessions = new ArrayList<>();
 
     // Relaciona mas não retorna no json
 

@@ -1,18 +1,14 @@
 package com.ifgoiano.topfilmes.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Getter
@@ -39,10 +35,10 @@ public class Movie {
     // Relacionamentos
 
     @OneToMany(mappedBy = "movie")
-    private java.util.List<Avaliation> avaliations;
+    private java.util.List<Avaliation> avaliations = new ArrayList<>();
  
     @OneToMany(mappedBy = "movie")
-    private java.util.List<Comment> comments;
+    private java.util.List<Comment> comments = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -50,13 +46,13 @@ public class Movie {
             joinColumns = @JoinColumn,
             inverseJoinColumns = @JoinColumn
     )
-    private java.util.List<Actor> actors;
+    private java.util.List<Actor> actors = new ArrayList<>();
     
     @ManyToOne
     @JoinColumn
     private User user;
  
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "movie_list",
             joinColumns = @JoinColumn,
@@ -65,6 +61,6 @@ public class Movie {
     private java.util.List<List> list;
 
     @ManyToMany(mappedBy = "movies")
-    private java.util.List<Session> sessions;
+    private java.util.List<Session> sessions = new ArrayList<>();
 
 }

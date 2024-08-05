@@ -1,20 +1,14 @@
 package com.ifgoiano.topfilmes.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifgoiano.topfilmes.domain.enums.Roles;
-import com.ifgoiano.topfilmes.utils.PersonalizedResponse;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Getter
@@ -48,18 +42,18 @@ public class User {
 
     // Relaciona mas não retorna no json
     @OneToMany(mappedBy = "user")
-    private java.util.List<Movie> movies;
+    private java.util.List<Movie> movies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private java.util.List<Avaliation> avaliations;
+    private java.util.List<Avaliation> avaliations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private java.util.List<Comment> comments;
+    private java.util.List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private java.util.List<Session> sessions;
+    private java.util.List<Session> sessions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user") // usuário admin cadastra
-    private java.util.List<Cinema> cinemas;
+    private java.util.List<Cinema> cinemas = new ArrayList<>();
 
 }

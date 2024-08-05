@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class Session {
             joinColumns = @JoinColumn,
             inverseJoinColumns = @JoinColumn
     )
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -45,7 +46,7 @@ public class Session {
             joinColumns = @JoinColumn,
             inverseJoinColumns = @JoinColumn
     )
-    private List<Cinema> cinemas;
+    private List<Cinema> cinemas = new ArrayList<>();
 
     // Relaciona mas não retorna no json
 
