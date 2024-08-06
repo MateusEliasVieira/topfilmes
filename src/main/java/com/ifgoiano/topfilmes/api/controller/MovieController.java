@@ -145,12 +145,13 @@ public class MovieController {
     public ResponseEntity<?> add(@RequestBody @Valid MovieRequestDTO movieRequestDTO) {
         return new ResponseEntity<MovieResponseDTO>(MovieMapper.convertMovieEntityToMovieResponseDTO(service.add(MovieMapper.convertMovieRequestDTOToMovieEntity(movieRequestDTO))), HttpStatus.CREATED);
     }
+
     @Operation(summary = "Atualiza um filme", description = "Atualiza uma filme existente", method = "PUT", responses = {
             @ApiResponse(description = "Atualização realizada com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Houve um erro ao atualizar o filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody @Valid MovieRequestDTO movieRequestDTO){
+    public ResponseEntity<?> update(@RequestBody @Valid MovieRequestDTO movieRequestDTO) {
         return new ResponseEntity<MovieResponseDTO>(MovieMapper.convertMovieEntityToMovieResponseDTO(service.update(MovieMapper.convertMovieRequestDTOToMovieEntity(movieRequestDTO))), HttpStatus.CREATED);
     }
 

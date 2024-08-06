@@ -43,8 +43,8 @@ public class Movie {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movie_actor",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id")
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
     )
     private java.util.List<Actor> actors = new ArrayList<>();
     
@@ -52,7 +52,7 @@ public class Movie {
     @JoinColumn
     private User user;
  
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movie_list",
             joinColumns = @JoinColumn,

@@ -1,8 +1,6 @@
 package com.ifgoiano.topfilmes.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +22,7 @@ public class Actor {
     private String name;
     private Date dateOfBirth;
 
-    @ManyToMany(mappedBy = "actors", cascade = CascadeType.PERSIST)
-    @JsonIgnore // Evitar ciclos de serialização JSON
+    @ManyToMany(mappedBy = "actors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Movie> movies = new ArrayList<>();
 
 

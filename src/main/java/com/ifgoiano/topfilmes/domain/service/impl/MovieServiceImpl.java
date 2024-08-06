@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -36,23 +37,6 @@ public class MovieServiceImpl implements MovieService {
 
         userService.searchById(movie.getUser().getIdUser());
 
-        // Verificar e anexar atores
-//        for (int i = 0; i < listActor.size(); i++) {
-//            Actor actor = listActor.get(i);
-//
-//            if (actor.getIdActor() != null) {
-//                // Carregar a entidade do banco
-//                Actor actorIsEmpty = actorService.searchById(actor.getIdActor());
-//                if(actorIsEmpty != null){
-//                    movie.getActors().add(actorIsEmpty);
-//                }else{
-//                    Actor actorNew = actorService.add(actor);
-//                    movie.getActors().add(actorNew);
-//                }
-//
-//            }
-//        }
-
         Genders genders = new Genders();
         if (!genders.getListGender().contains(movie.getGender().toString())) {
             throw new BusinessRulesException("Gênero inválido!");
@@ -60,11 +44,16 @@ public class MovieServiceImpl implements MovieService {
 
         if (repository.findMovieByTitle(movie.getTitle().toUpperCase().trim()).isPresent()) {
             throw new BusinessRulesException("O filme " + movie.getTitle() + " já está cadastrado em nosso sistema!");
-        } else {
-            movie.setTitle(movie.getTitle().toUpperCase().trim());
-            return repository.save(movie);
         }
+
+        movie.setTitle(movie.getTitle().toUpperCase().trim());
+
+        // Salva o filme
+        return repository.save(movie);
+
+        // está salvando, mas devo concertar o erro de logica ao salvar o ator com o filme, pois esta criando atores repetidos no banco de dados
     }
+
 
 
     @Override
@@ -100,15 +89,17 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie searchByTitle(String title) {
-        return repository.findMovieByTitle(title.toUpperCase().trim()).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado nenhum filme com nome "+title+"!");});
+        return repository.findMovieByTitle(title.toUpperCase().trim()).orElseThrow(() -> {
+            throw new BusinessRulesException("Não foi encontrado nenhum filme com nome " + title + "!");
+        });
     }
 
     @Override
     public List<Movie> searchByGender(String gender) {
         Gender gender_converted = null;
-        try{
+        try {
             gender_converted = Gender.valueOf(gender.toUpperCase().trim());
-        }catch(Exception E){
+        } catch (Exception E) {
             throw new BusinessRulesException("Gênero inválido!");
         }
 
@@ -128,12 +119,16 @@ public class MovieServiceImpl implements MovieService {
         if (idMovie == null)
             throw new BusinessRulesException("Informe o id do filme para realizar a conculta!");
 
-        return repository.findById(idMovie).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado o filme!");});
+        return repository.findById(idMovie).orElseThrow(() -> {
+            throw new BusinessRulesException("Não foi encontrado o filme!");
+        });
 
     }
 
     @Override
     public List<Movie> searchByStringInTitleMovie(String title) {
-        return repository.findMovieByTitleLike(title.toUpperCase().trim()).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado nenhum filme que contenha ("+title+") em seu nome!");});
+        return repository.findMovieByTitleLike(title.toUpperCase().trim()).orElseThrow(() -> {
+            throw new BusinessRulesException("Não foi encontrado nenhum filme que contenha (" + title + ") em seu nome!");
+        });
     }
 }

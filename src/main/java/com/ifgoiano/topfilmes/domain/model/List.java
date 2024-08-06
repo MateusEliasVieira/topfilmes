@@ -23,7 +23,7 @@ public class List {
 
     // Relacionamentos
 
-    @ManyToMany(mappedBy = "list", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "list", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private java.util.List<Movie> movies = new ArrayList<>();
 
     // Relaciona mas não retorna no json
