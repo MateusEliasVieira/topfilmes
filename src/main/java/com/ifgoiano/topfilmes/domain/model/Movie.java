@@ -40,11 +40,11 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private java.util.List<Comment> comments = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movie_actor",
-            joinColumns = @JoinColumn,
-            inverseJoinColumns = @JoinColumn
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     private java.util.List<Actor> actors = new ArrayList<>();
     

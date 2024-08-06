@@ -4,6 +4,8 @@ import com.ifgoiano.topfilmes.api.dto.movie.MovieRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.MovieMapper;
 import com.ifgoiano.topfilmes.api.message.MessageResponse;
+import com.ifgoiano.topfilmes.domain.domainException.BusinessRulesException;
+import com.ifgoiano.topfilmes.domain.enums.Gender;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import com.ifgoiano.topfilmes.domain.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +47,7 @@ public class MovieController {
         return ResponseEntity.ok(MovieMapper.convertListMovieEntityToListMovieResponseDTO(service.listAll()));
     }
 
-    @GetMapping("/list/{idMovie}")
+    @GetMapping("/list/id/{idMovie}")
     @Operation(summary = "Busca filme por ID", description = "Busca um filme específico por seu ID", method = "GET", responses = {
             @ApiResponse(description = "Filme encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Filme não encontrado!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
@@ -63,7 +65,7 @@ public class MovieController {
         movie.add(selfLink);
 
         // Busca todos os filmes do mesmo gênero
-        List<Movie> moviesWithSameGenre = service.searchByGender(movie.getGender());
+        List<Movie> moviesWithSameGenre = service.searchByGender(movie.getGender().toString());
         for (Movie sameGenreMovie : moviesWithSameGenre) {
             if (!sameGenreMovie.getIdMovie().equals(idMovie)) { // Evita adicionar o próprio filme
                 MovieResponseDTO sameGenreMovieDTO = MovieMapper.convertMovieEntityToMovieResponseDTO(sameGenreMovie);
@@ -75,6 +77,61 @@ public class MovieController {
         }
 
         return ResponseEntity.ok(movie);
+    }
+
+    @GetMapping("/list/title/{title}")
+    @Operation(summary = "Busca filme por nome", description = "Busca um filme específico por seu nome", method = "GET", responses = {
+            @ApiResponse(description = "Filme encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
+            @ApiResponse(description = "Filme não encontrado!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    public ResponseEntity<MovieResponseDTO> getMovieByTitle(@PathVariable("title") String title) {
+        // Busca o filme pelo ID
+        Movie movieEntity = service.searchByTitle(title);
+        if (movieEntity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        MovieResponseDTO movie = MovieMapper.convertMovieEntityToMovieResponseDTO(movieEntity);
+
+        // Cria um link para o próprio filme
+        Link selfLink = linkTo(methodOn(MovieController.class).getMovieByTitle(title)).withSelfRel();
+        movie.add(selfLink);
+
+        // Busca todos os filmes do mesmo gênero
+        List<Movie> moviesWithSameGenre = service.searchByGender(movie.getGender().toString());
+        for (Movie sameGenreMovie : moviesWithSameGenre) {
+            if (!sameGenreMovie.getIdMovie().equals(title)) { // Evita adicionar o próprio filme
+                MovieResponseDTO sameGenreMovieDTO = MovieMapper.convertMovieEntityToMovieResponseDTO(sameGenreMovie);
+                Link movieLink = linkTo(methodOn(MovieController.class).getMovieById(sameGenreMovie.getIdMovie()))
+                        .withRel("related")
+                        .withTitle(sameGenreMovieDTO.getTitle());
+                movie.add(movieLink);
+            }
+        }
+
+        return ResponseEntity.ok(movie);
+    }
+
+    @GetMapping("/list/contain/{title}")
+    @Operation(summary = "Busca filmes por parte do nome", description = "Busca filmes que contem parte da string informada em seu nome", method = "GET", responses = {
+            @ApiResponse(description = "Filme(s) encontrado(s) com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
+            @ApiResponse(description = "Filme(s) não encontrado(s)!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    public ResponseEntity<?> getMovieByContainStringInTitle(@PathVariable("title") String title) {
+        List<Movie> movies = service.searchByStringInTitleMovie(title);
+        List<MovieResponseDTO> moviesResponseDTO = MovieMapper.convertListMovieEntityToListMovieResponseDTO(movies);
+        return ResponseEntity.ok(moviesResponseDTO);
+    }
+
+    @GetMapping("/list/gender/{gender}")
+    @Operation(summary = "Busca filmes por gênero", description = "Busca filmes pelo seu gênero", method = "GET", responses = {
+            @ApiResponse(description = "Filme(s) encontrado(s) com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
+            @ApiResponse(description = "Filme(s) não encontrado(s)!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    public ResponseEntity<?> getMovieByGender(@PathVariable("gender") String gender) {
+
+        List<Movie> movies = service.searchByGender(gender);
+        List<MovieResponseDTO> moviesResponseDTO = MovieMapper.convertListMovieEntityToListMovieResponseDTO(movies);
+        return ResponseEntity.ok(moviesResponseDTO);
     }
 
 

@@ -20,11 +20,13 @@ import java.util.List;
 public class Actor {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAtor;
+    private Long idActor;
     private String name;
     private Date dateOfBirth;
 
-    @ManyToMany(mappedBy = "actors")
+    @ManyToMany(mappedBy = "actors", cascade = CascadeType.PERSIST)
+    @JsonIgnore // Evitar ciclos de serialização JSON
     private List<Movie> movies = new ArrayList<>();
+
 
 }

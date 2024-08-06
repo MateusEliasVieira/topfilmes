@@ -1,6 +1,7 @@
 package com.ifgoiano.topfilmes.domain.service;
 
 import com.ifgoiano.topfilmes.domain.model.Actor;
+import com.ifgoiano.topfilmes.domain.model.Movie;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface ActorService {
     public Actor searchById(Long idActor);
 
     public List<Actor> listAll();
+
 
 
 }

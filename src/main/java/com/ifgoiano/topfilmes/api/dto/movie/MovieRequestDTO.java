@@ -1,6 +1,7 @@
 package com.ifgoiano.topfilmes.api.dto.movie;
 
 import com.ifgoiano.topfilmes.api.dto.actor.ActorIDRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.actor.ActorRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.comment.CommentIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.list.ListIDRequestDTO;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,6 +49,8 @@ public class MovieRequestDTO {
     @NotBlank(message = PersonalizedResponse.FILME_ATR_DISTRIBUIDORA_VAZIO)
     private String distributor;
 
+    @NotNull
+    private List<ActorRequestDTO> actors;
 
     @NotNull
     private UserIDRequestDTO user;

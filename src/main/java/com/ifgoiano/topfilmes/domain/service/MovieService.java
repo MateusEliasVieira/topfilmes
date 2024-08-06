@@ -11,7 +11,9 @@ public interface MovieService {
     public Movie update(Movie movie);
     public void deleteById(Long idFilme);
     public List<Movie> listAll();
-    public List<Movie> searchByGender(Gender gender);
+    public Movie searchByTitle(String title);
+    public List<Movie> searchByGender(String gender);
     public Movie searchById(Long idMovie);
+    public List<Movie> searchByStringInTitleMovie(String title);
 
 }

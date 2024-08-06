@@ -2,8 +2,10 @@ package com.ifgoiano.topfilmes.domain.service.impl;
 
 import com.ifgoiano.topfilmes.domain.domainException.BusinessRulesException;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
+import com.ifgoiano.topfilmes.domain.model.Actor;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import com.ifgoiano.topfilmes.domain.repository.MovieRepository;
+import com.ifgoiano.topfilmes.domain.service.ActorService;
 import com.ifgoiano.topfilmes.domain.service.MovieService;
 import com.ifgoiano.topfilmes.domain.service.UserService;
 import com.ifgoiano.topfilmes.utils.Genders;
@@ -21,19 +23,41 @@ public class MovieServiceImpl implements MovieService {
     private MovieRepository repository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ActorService actorService;
+
 
     @Transactional(readOnly = false)
     @Override
     public Movie add(Movie movie) {
 
-        userService.searchById(movie.getUser().getIdUser()); // se passar, existe o usuário
+        if (movie.getActors().isEmpty())
+            throw new BusinessRulesException("Informe os atores do filme!");
 
-        // verificar se o genero é válido
+        userService.searchById(movie.getUser().getIdUser());
+
+        // Verificar e anexar atores
+//        for (int i = 0; i < listActor.size(); i++) {
+//            Actor actor = listActor.get(i);
+//
+//            if (actor.getIdActor() != null) {
+//                // Carregar a entidade do banco
+//                Actor actorIsEmpty = actorService.searchById(actor.getIdActor());
+//                if(actorIsEmpty != null){
+//                    movie.getActors().add(actorIsEmpty);
+//                }else{
+//                    Actor actorNew = actorService.add(actor);
+//                    movie.getActors().add(actorNew);
+//                }
+//
+//            }
+//        }
+
         Genders genders = new Genders();
-        if(!genders.getListGender().contains(movie.getGender().toString()))
+        if (!genders.getListGender().contains(movie.getGender().toString())) {
             throw new BusinessRulesException("Gênero inválido!");
+        }
 
-        // Verificar se o filme não está cadastrado
         if (repository.findMovieByTitle(movie.getTitle().toUpperCase().trim()).isPresent()) {
             throw new BusinessRulesException("O filme " + movie.getTitle() + " já está cadastrado em nosso sistema!");
         } else {
@@ -41,6 +65,7 @@ public class MovieServiceImpl implements MovieService {
             return repository.save(movie);
         }
     }
+
 
     @Override
     public Movie update(Movie movie) {
@@ -74,12 +99,23 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> searchByGender(Gender gender) {
+    public Movie searchByTitle(String title) {
+        return repository.findMovieByTitle(title.toUpperCase().trim()).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado nenhum filme com nome "+title+"!");});
+    }
 
-        if (gender == null)
+    @Override
+    public List<Movie> searchByGender(String gender) {
+        Gender gender_converted = null;
+        try{
+            gender_converted = Gender.valueOf(gender.toUpperCase().trim());
+        }catch(Exception E){
+            throw new BusinessRulesException("Gênero inválido!");
+        }
+
+        if (gender_converted == null)
             throw new BusinessRulesException("Informe o gênero do filme para realizar a conculta!");
 
-        return repository.findMovieByGender(gender).orElseThrow(() -> {
+        return repository.findMovieByGender(gender_converted).orElseThrow(() -> {
             throw new BusinessRulesException("Ops, não temos filmes com esse gênero em nossa base de dados! :(");
         });
 
@@ -92,9 +128,12 @@ public class MovieServiceImpl implements MovieService {
         if (idMovie == null)
             throw new BusinessRulesException("Informe o id do filme para realizar a conculta!");
 
-        return repository.findById(idMovie).orElseThrow(() -> {
-            throw new BusinessRulesException("Não foi encontrado o filme com o id " + idMovie);
-        });
+        return repository.findById(idMovie).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado o filme!");});
 
+    }
+
+    @Override
+    public List<Movie> searchByStringInTitleMovie(String title) {
+        return repository.findMovieByTitleLike(title.toUpperCase().trim()).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado nenhum filme que contenha ("+title+") em seu nome!");});
     }
 }
