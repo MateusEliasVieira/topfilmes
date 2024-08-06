@@ -4,6 +4,7 @@ import com.ifgoiano.topfilmes.api.dto.movie.MovieRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.MovieMapper;
 import com.ifgoiano.topfilmes.api.message.MessageResponse;
+import com.ifgoiano.topfilmes.domain.model.Movie;
 import com.ifgoiano.topfilmes.domain.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,10 +14,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path = "/movie", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +44,39 @@ public class MovieController {
     public ResponseEntity<?> listAll() {
         return ResponseEntity.ok(MovieMapper.convertListMovieEntityToListMovieResponseDTO(service.listAll()));
     }
+
+    @GetMapping("/list/{idMovie}")
+    @Operation(summary = "Busca filme por ID", description = "Busca um filme específico por seu ID", method = "GET", responses = {
+            @ApiResponse(description = "Filme encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
+            @ApiResponse(description = "Filme não encontrado!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+    })
+    public ResponseEntity<MovieResponseDTO> getMovieById(@PathVariable("idMovie") Long idMovie) {
+        // Busca o filme pelo ID
+        Movie movieEntity = service.searchById(idMovie);
+        if (movieEntity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        MovieResponseDTO movie = MovieMapper.convertMovieEntityToMovieResponseDTO(movieEntity);
+
+        // Cria um link para o próprio filme
+        Link selfLink = linkTo(methodOn(MovieController.class).getMovieById(idMovie)).withSelfRel();
+        movie.add(selfLink);
+
+        // Busca todos os filmes do mesmo gênero
+        List<Movie> moviesWithSameGenre = service.searchByGender(movie.getGender());
+        for (Movie sameGenreMovie : moviesWithSameGenre) {
+            if (!sameGenreMovie.getIdMovie().equals(idMovie)) { // Evita adicionar o próprio filme
+                MovieResponseDTO sameGenreMovieDTO = MovieMapper.convertMovieEntityToMovieResponseDTO(sameGenreMovie);
+                Link movieLink = linkTo(methodOn(MovieController.class).getMovieById(sameGenreMovie.getIdMovie()))
+                        .withRel("related")
+                        .withTitle(sameGenreMovieDTO.getTitle());
+                movie.add(movieLink);
+            }
+        }
+
+        return ResponseEntity.ok(movie);
+    }
+
 
     // ADMIN
 
