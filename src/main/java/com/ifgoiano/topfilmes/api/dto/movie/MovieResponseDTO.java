@@ -32,6 +32,8 @@ public class MovieResponseDTO extends RepresentationModel<MovieResponseDTO> {
     private double duration;
     private int classification;
     private String distributor;
+    private byte[] cover;
+    private byte[] thriller;
 
     private List<ActorResponseDTO> actors;
     private List<CommentResponseDTO> comments;

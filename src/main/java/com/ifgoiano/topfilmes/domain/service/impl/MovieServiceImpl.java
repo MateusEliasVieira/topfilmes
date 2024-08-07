@@ -12,11 +12,12 @@ import com.ifgoiano.topfilmes.utils.Genders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -30,7 +31,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Transactional(readOnly = false)
     @Override
-    public Movie add(Movie movie) {
+    public Movie add(Movie movie, MultipartFile cover, MultipartFile trailer) {
         // Verifica se a lista de atores está vazia
         if (movie.getActors().isEmpty()) {
             throw new BusinessRulesException("Informe os atores do filme!");
@@ -53,6 +54,14 @@ public class MovieServiceImpl implements MovieService {
 
         // Ajusta o título do filme para caixa alta e remove espaços em branco
         movie.setTitle(movieTitle);
+
+        // Pega os bytes do video e imagem
+        try {
+            movie.setCover(cover.getBytes());
+            movie.setTrailer(trailer.getBytes());
+        } catch (IOException e) {
+            throw new BusinessRulesException("Falha ao cadastrar filme!");
+        }
 
         // Itera sobre os atores do filme para verificar ou criar novos registros
         List<Actor> updatedActors = new ArrayList<>();
@@ -122,7 +131,7 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     @Override
     public List<Movie> listAll() {
-        return repository.findAll();
+        return repository.findAllByOrderByLaunchDesc();
     }
 
     @Override
@@ -162,6 +171,7 @@ public class MovieServiceImpl implements MovieService {
         });
 
     }
+
 
     @Override
     public List<Movie> searchByStringInTitleMovie(String title) {

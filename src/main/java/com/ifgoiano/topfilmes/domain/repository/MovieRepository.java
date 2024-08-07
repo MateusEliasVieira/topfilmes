@@ -20,4 +20,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("SELECT m FROM Movie m WHERE m.title LIKE CONCAT('%', :title, '%')")
     public Optional<List<Movie>> findMovieByTitleLike(@Param("title") String title);
 
+    public List<Movie> findAllByOrderByLaunchDesc();
+
+
 }

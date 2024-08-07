@@ -1,11 +1,6 @@
 package com.ifgoiano.topfilmes.api.dto.movie;
 
-import com.ifgoiano.topfilmes.api.dto.actor.ActorIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.actor.ActorRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.comment.CommentIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.list.ListIDRequestDTO;
-import com.ifgoiano.topfilmes.api.dto.session.SessionIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.user.UserIDRequestDTO;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
 import com.ifgoiano.topfilmes.utils.PersonalizedResponse;

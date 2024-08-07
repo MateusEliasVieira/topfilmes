@@ -31,6 +31,12 @@ public class Movie {
     private double duration;
     private int classification;
     private String distributor;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] cover;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] trailer;
 
     // Relacionamentos
 

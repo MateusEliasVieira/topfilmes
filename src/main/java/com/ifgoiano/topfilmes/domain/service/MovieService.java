@@ -1,13 +1,13 @@
 package com.ifgoiano.topfilmes.domain.service;
 
-import com.ifgoiano.topfilmes.domain.enums.Gender;
 import com.ifgoiano.topfilmes.domain.model.Movie;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface MovieService {
 
-    public Movie add(Movie movie);
+    public Movie add(Movie movie, MultipartFile cover, MultipartFile trailer);
     public Movie update(Movie movie);
     public void deleteById(Long idFilme);
     public List<Movie> listAll();
