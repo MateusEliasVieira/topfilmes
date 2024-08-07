@@ -19,6 +19,7 @@ public class Actor {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idActor;
+    @Column(unique = true)
     private String name;
     private Date dateOfBirth;
 

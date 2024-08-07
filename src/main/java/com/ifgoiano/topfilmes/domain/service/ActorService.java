@@ -4,6 +4,7 @@ import com.ifgoiano.topfilmes.domain.model.Actor;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ActorService {
 
@@ -13,7 +14,8 @@ public interface ActorService {
 
     public void deleteById(Long idActor);
 
-    public Actor searchById(Long idActor);
+    public Optional<Actor> searchById(Long idActor);
+    public Optional<Actor> searchByName(String name);
 
     public List<Actor> listAll();
 

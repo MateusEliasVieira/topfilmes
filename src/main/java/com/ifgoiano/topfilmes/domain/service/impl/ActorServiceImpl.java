@@ -1,6 +1,7 @@
 package com.ifgoiano.topfilmes.domain.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,13 @@ public class ActorServiceImpl implements ActorService {
 
     @Transactional(readOnly = true)
     @Override
-    public Actor searchById(Long idActor) {
-        return repository.findById(idActor).get();
+    public Optional<Actor> searchById(Long idActor) {
+        return repository.findById(idActor);
+    }
+
+    @Override
+    public Optional<Actor> searchByName(String name) {
+        return repository.findByName(name);
     }
 
     @Transactional(readOnly = true)

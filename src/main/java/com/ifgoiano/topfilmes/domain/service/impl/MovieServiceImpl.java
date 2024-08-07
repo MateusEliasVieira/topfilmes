@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -27,33 +28,70 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private ActorService actorService;
 
-
     @Transactional(readOnly = false)
     @Override
     public Movie add(Movie movie) {
-
-        if (movie.getActors().isEmpty())
+        // Verifica se a lista de atores está vazia
+        if (movie.getActors().isEmpty()) {
             throw new BusinessRulesException("Informe os atores do filme!");
+        }
 
+        // Verifica se o usuário existe pelo ID
         userService.searchById(movie.getUser().getIdUser());
 
+        // Verifica se o gênero do filme é válido
         Genders genders = new Genders();
         if (!genders.getListGender().contains(movie.getGender().toString())) {
             throw new BusinessRulesException("Gênero inválido!");
         }
 
-        if (repository.findMovieByTitle(movie.getTitle().toUpperCase().trim()).isPresent()) {
+        // Verifica se o filme já está cadastrado pelo título
+        String movieTitle = movie.getTitle().toUpperCase().trim();
+        if (repository.findMovieByTitle(movieTitle).isPresent()) {
             throw new BusinessRulesException("O filme " + movie.getTitle() + " já está cadastrado em nosso sistema!");
         }
 
-        movie.setTitle(movie.getTitle().toUpperCase().trim());
+        // Ajusta o título do filme para caixa alta e remove espaços em branco
+        movie.setTitle(movieTitle);
 
-        // Salva o filme
+        // Itera sobre os atores do filme para verificar ou criar novos registros
+        List<Actor> updatedActors = new ArrayList<>();
+        for (Actor actor : movie.getActors()) {
+            // Define o nome do ator em caixa alta e remove espaços em branco
+            actor.setName(actor.getName().toUpperCase().trim());
+
+            Optional<Actor> actorFindById = Optional.empty();
+            Optional<Actor> actorFindByName = Optional.empty();
+
+            if (actor.getIdActor() != null) {
+                // Se o ID do ator foi passado, busca o ator pelo ID
+                actorFindById = actorService.searchById(actor.getIdActor());
+            }
+
+            if (!actorFindById.isPresent()) {
+                // Se o ator não foi encontrado pelo ID, busca pelo nome
+                actorFindByName = actorService.searchByName(actor.getName());
+            }
+
+            if (actorFindById.isPresent()) {
+                // Se encontrou pelo ID, utiliza o ator encontrado
+                updatedActors.add(actorFindById.get());
+            } else if (actorFindByName.isPresent()) {
+                // Se encontrou pelo nome, utiliza o ator encontrado
+                updatedActors.add(actorFindByName.get());
+            } else {
+                // Novo ator, persistir no banco de dados
+                Actor newActor = actorService.add(actor);
+                updatedActors.add(newActor);
+            }
+        }
+
+        // Atualiza a lista de atores do filme
+        movie.setActors(updatedActors);
+
+        // Salva o filme e retorna o resultado
         return repository.save(movie);
-
-        // está salvando, mas devo concertar o erro de logica ao salvar o ator com o filme, pois esta criando atores repetidos no banco de dados
     }
-
 
 
     @Override
