@@ -40,10 +40,10 @@ public class Movie {
 
     // Relacionamentos
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
     private java.util.List<Avaliation> avaliations = new ArrayList<>();
  
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
     private java.util.List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -66,7 +66,7 @@ public class Movie {
     )
     private java.util.List<List> list;
 
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany(mappedBy = "movies") // nao da para deletar o filme por que tem uma sessão apontando para ela na tabela session_movie
     private java.util.List<Session> sessions = new ArrayList<>();
 
 }

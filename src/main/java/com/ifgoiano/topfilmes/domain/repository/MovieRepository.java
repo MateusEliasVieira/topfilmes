@@ -3,6 +3,7 @@ package com.ifgoiano.topfilmes.domain.repository;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     public Optional<List<Movie>> findMovieByTitleLike(@Param("title") String title);
 
     public List<Movie> findAllByOrderByLaunchDesc();
+    @Modifying
+    @Query(value = "DELETE FROM session_movie WHERE movies_id_movie = :idMovie", nativeQuery = true)
+    public void deleteSessionMovie(@Param("idMovie") Long idMovie);
 
 
 }

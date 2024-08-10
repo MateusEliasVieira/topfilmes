@@ -40,9 +40,9 @@ public class AvaliationController {
             @ApiResponse(description = "Listagem realizada com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AvaliationResponseDTO.class))),
             @ApiResponse(description = "Não foi possível listar as avaliações!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @GetMapping("/list-all")
-    public ResponseEntity<?> listAll(){
-        return ResponseEntity.ok(AvaliationMapper.convertListAvaliationEntityToListAvaliationResponseDTO(service.listAll()));
+    @GetMapping("/list/{idMovie}")
+    public ResponseEntity<?> listAvaliationsByMovie(@PathVariable("idMovie") Long idMovie){
+        return ResponseEntity.ok(AvaliationMapper.convertListAvaliationEntityToListAvaliationResponseDTO(service.listAvaliationByMovie(idMovie)));
     }
 
     // ADMIN

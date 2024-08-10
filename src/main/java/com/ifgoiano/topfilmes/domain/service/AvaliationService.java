@@ -11,6 +11,7 @@ public interface AvaliationService {
     public Avaliation update(Avaliation avaliation);
 
     public List<Avaliation> listAll();
+    public List<Avaliation> listAvaliationByMovie(Long idMovie);
 
     public Avaliation searchById(Long idAvaliation);
 

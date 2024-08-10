@@ -182,14 +182,14 @@ public class MovieController {
             @ApiResponse(description = "Atualização realizada com sucesso!", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Houve um erro ao atualizar o filme!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    @PutMapping("/update")
+    @PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> update(@RequestParam MultipartFile trailer, @RequestParam MultipartFile cover, @RequestParam String movieRequestDTO) {
         // Passa os arquivos para o serviço junto com o DTO
         try {
             MovieRequestDTO movieRequestDTO_converted = new ObjectMapper().readValue(movieRequestDTO, MovieRequestDTO.class);
-            Movie movie = service.add(MovieMapper.convertMovieRequestDTOToMovieEntity(movieRequestDTO_converted), cover, trailer);
+            Movie movie = service.update(MovieMapper.convertMovieRequestDTOToMovieEntity(movieRequestDTO_converted), cover, trailer);
             MovieResponseDTO responseDTO = MovieMapper.convertMovieEntityToMovieResponseDTO(movie);
-            return new ResponseEntity<MovieResponseDTO>(MovieMapper.convertMovieEntityToMovieResponseDTO(service.update(MovieMapper.convertMovieRequestDTOToMovieEntity(movieRequestDTO_converted))), HttpStatus.CREATED);
+            return new ResponseEntity<MovieResponseDTO>(responseDTO, HttpStatus.CREATED);
         } catch (JsonProcessingException e) {
             throw new BusinessRulesException("Falha ao realizar uploads de arquivos do filme");
         }

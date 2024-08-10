@@ -2,7 +2,9 @@ package com.ifgoiano.topfilmes.domain.service.impl;
 
 import com.ifgoiano.topfilmes.domain.domainException.BusinessRulesException;
 import com.ifgoiano.topfilmes.domain.model.User;
+import com.ifgoiano.topfilmes.domain.repository.ListRepository;
 import com.ifgoiano.topfilmes.domain.repository.UserRepository;
+import com.ifgoiano.topfilmes.domain.service.ListService;
 import com.ifgoiano.topfilmes.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private ListRepository listRepository;
 
     @Transactional(readOnly = false)
     @Override
@@ -24,33 +28,22 @@ public class UserServiceImpl implements UserService {
         // Existe o usuario para atualizar
         Optional<User> userFound = repository.findByCpf(user.getCpf());
 
-        if(userFound.isPresent())
-            throw new BusinessRulesException("O CPF "+user.getCpf()+", pertence a outro usuário já cadastrado!");
+        if (userFound.isPresent())
+            throw new BusinessRulesException("O CPF " + user.getCpf() + ", pertence a outro usuário já cadastrado!");
 
         userFound = repository.findByEmail(user.getEmail());
 
-        if(userFound.isPresent())
-            throw new BusinessRulesException("O email "+user.getEmail()+", pertence a outro usuário já cadastrado!");
+        if (userFound.isPresent())
+            throw new BusinessRulesException("O email " + user.getEmail() + ", pertence a outro usuário já cadastrado!");
 
         userFound = repository.findByUser(user.getUser());
 
-        if(userFound.isPresent())
-            throw new BusinessRulesException("O nome de usuário "+user.getUser()+", pertence a outro usuário já cadastrado!");
+        if (userFound.isPresent())
+            throw new BusinessRulesException("O nome de usuário " + user.getUser() + ", pertence a outro usuário já cadastrado!");
 
         return repository.save(user);
     }
 
-    @Transactional(readOnly = false)
-    @Override
-    public void deleteById(Long idUser) {
-        if (repository.findById(idUser).isPresent()) {
-            // Existe o usuario para deletar
-            repository.deleteById(idUser);
-        } else {
-            // Não existe o usuário para atualizar
-            throw new BusinessRulesException("Não existe usuário com id " + idUser);
-        }
-    }
 
     @Transactional(readOnly = false)
     @Override
@@ -59,21 +52,21 @@ public class UserServiceImpl implements UserService {
             // Existe o usuario para atualizar
             Optional<User> userFound = repository.findByCpf(user.getCpf());
 
-            if(userFound.isPresent())
-                if(userFound.get().getIdUser() != user.getIdUser())
-                    throw new BusinessRulesException("O CPF "+user.getCpf()+", pertence a outro usuário já cadastrado!");
+            if (userFound.isPresent())
+                if (userFound.get().getIdUser() != user.getIdUser())
+                    throw new BusinessRulesException("O CPF " + user.getCpf() + ", pertence a outro usuário já cadastrado!");
 
             userFound = repository.findByEmail(user.getEmail());
 
-            if(userFound.isPresent())
-                if(userFound.get().getIdUser() != user.getIdUser())
-                    throw new BusinessRulesException("O email "+user.getEmail()+", pertence a outro usuário já cadastrado!");
+            if (userFound.isPresent())
+                if (userFound.get().getIdUser() != user.getIdUser())
+                    throw new BusinessRulesException("O email " + user.getEmail() + ", pertence a outro usuário já cadastrado!");
 
             userFound = repository.findByUser(user.getUser());
 
-            if(userFound.isPresent())
-                if(userFound.get().getIdUser() != user.getIdUser())
-                    throw new BusinessRulesException("O nome de usuário "+user.getUser()+", pertence a outro usuário já cadastrado!");
+            if (userFound.isPresent())
+                if (userFound.get().getIdUser() != user.getIdUser())
+                    throw new BusinessRulesException("O nome de usuário " + user.getUser() + ", pertence a outro usuário já cadastrado!");
 
             return repository.save(user);
         } else {

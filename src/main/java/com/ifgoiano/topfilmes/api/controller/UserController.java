@@ -48,16 +48,6 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.convertUserEntityToUserResponseDTO(service.update(UserMapper.convertUserWithIDRequestDTOToUserEntity(userWithIDRequestDTO))));
     }
 
-    @Operation(summary = "Deleta usuários", description = "Realiza a remoção de um usuário por id", method = "DELETE", responses = {
-            @ApiResponse(description = "Usuário deletado com sucesso!", responseCode = "204", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
-            @ApiResponse(description = "Erro ao deletar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
-    })
-    @DeleteMapping("/delete/{idUser}")
-    public ResponseEntity<?> deleteById(@PathVariable("idUser") @Valid @NotNull(message = "Informe o id do usuário!") Long idUser) {
-        service.deleteById(idUser);
-        return ResponseEntity.noContent().build();
-    }
-
     @Operation(summary = "Buscar usuários", description = "Realiza a busca de um usuário por id", method = "GET", responses = {
             @ApiResponse(description = "Usuário encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponseDTO.class))),
             @ApiResponse(description = "Erro ao encontrar usuário!", responseCode = "400", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))

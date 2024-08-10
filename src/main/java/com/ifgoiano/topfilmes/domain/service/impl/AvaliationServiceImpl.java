@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AvaliationServiceImpl implements AvaliationService {
@@ -36,19 +37,25 @@ public class AvaliationServiceImpl implements AvaliationService {
         User user = userService.searchById(avaliation.getUser().getIdUser()); // se passar, existe!
 
 
-        if(avaliation.getMovie().getIdMovie() == null)
+        if (avaliation.getMovie().getIdMovie() == null)
             throw new BusinessRulesException("Selecione o filme!");
 
         Movie movie = movieService.searchById(avaliation.getMovie().getIdMovie()); // se passar, existe!
 
 
-        if(avaliation.getScore() > 5 || avaliation.getScore() < 0)
+        if (avaliation.getScore() > 5 || avaliation.getScore() < 0)
             throw new BusinessRulesException("A pontuação deve ser entre 0 a 5 estrelas!");
 
-
         // busca avaliação pelo fk id_usuario da tabela avaliação
-        if(repository.findByUsuarioId(user.getIdUser()).isPresent())
-            throw new BusinessRulesException("O usuário "+user.getName()+" já fez uma avaliação do filme "+movie.getTitle()+"!");
+        Optional<List<Avaliation>> avaliations = repository.findByUsuarioId(user.getIdUser());
+        if (avaliations.isPresent() && !avaliations.isEmpty()) {
+            // verificar se o filme tem a avaliação desse usuário, se já tiver ai lança exceção
+            avaliations.get().forEach((avaliation_exist) -> {
+                if (avaliation_exist.getMovie().getIdMovie() == avaliation.getMovie().getIdMovie()) {
+                    throw new BusinessRulesException("O usuário " + user.getName() + " já fez uma avaliação do filme " + movie.getTitle() + "!");
+                }
+            });
+        }
 
         avaliation.setMovie(movie);
         avaliation.setUser(user);
@@ -69,7 +76,7 @@ public class AvaliationServiceImpl implements AvaliationService {
     @Override
     public Avaliation update(Avaliation avaliation) {
 
-        if(avaliation.getIdAvaliation() == null)
+        if (avaliation.getIdAvaliation() == null)
             throw new BusinessRulesException("Informe a avaliação!");
 
         searchById(avaliation.getIdAvaliation()); // se passar, existe
@@ -81,6 +88,12 @@ public class AvaliationServiceImpl implements AvaliationService {
     @Override
     public List<Avaliation> listAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<Avaliation> listAvaliationByMovie(Long idMovie) {
+        Movie movie = movieService.searchById(idMovie); // se passar, existe
+        return repository.findAvaliationByMovie(idMovie).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado nenhuma avaliação para o filme "+movie.getTitle()+"!");});
     }
 
     @Transactional(readOnly = true)

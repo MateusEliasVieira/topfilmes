@@ -115,6 +115,93 @@ public class MovieServiceImpl implements MovieService {
 
 
     @Override
+    public Movie update(Movie movie, MultipartFile cover, MultipartFile trailer) {
+        if(movie.getIdMovie() == null)
+            throw new BusinessRulesException("Informe o id do filme a ser atualizado!");
+
+        searchById(movie.getIdMovie()); // se passar o filme ja foi cadastrado antes
+
+        userService.searchById(movie.getUser().getIdUser()); // se passar, existe o usuário
+
+        Optional<Movie> movieFound = repository.findMovieByTitle(movie.getTitle().toUpperCase().trim());
+
+        if (movieFound.isPresent())
+            if (movieFound.get().getIdMovie() != movie.getIdMovie())
+                throw new BusinessRulesException("Já existe outro filme cadastrado com o nome " + movie.getTitle());
+
+        // Verifica se a lista de atores está vazia
+        if (movie.getActors().isEmpty()) {
+            throw new BusinessRulesException("Informe os atores do filme!");
+        }
+
+        // Verifica se o gênero do filme é válido
+        Genders genders = new Genders();
+        if (!genders.getListGender().contains(movie.getGender().toString())) {
+            throw new BusinessRulesException("Gênero inválido!");
+        }
+
+        // Ajusta o título do filme para caixa alta e remove espaços em branco
+        movie.setTitle(movie.getTitle().toUpperCase().trim());
+
+        // Pega os bytes do video e imagem
+        try {
+            movie.setCover(cover.getBytes());
+            movie.setTrailer(trailer.getBytes());
+        } catch (IOException e) {
+            throw new BusinessRulesException("Falha ao obter dados dos arquivos de mídia para atualizar filme!");
+        }
+
+        // Itera sobre os atores do filme para verificar ou criar novos registros
+        List<Actor> updatedActors = new ArrayList<>();
+        for (Actor actor : movie.getActors()) {
+            // Define o nome do ator em caixa alta e remove espaços em branco
+            actor.setName(actor.getName().toUpperCase().trim());
+
+            Optional<Actor> actorFindById = Optional.empty();
+            Optional<Actor> actorFindByName = Optional.empty();
+
+            if (actor.getIdActor() != null) {
+                // Se o ID do ator foi passado, busca o ator pelo ID
+                actorFindById = actorService.searchById(actor.getIdActor());
+            }
+
+            if (actorFindById.isPresent()) {
+                // verificar se o nome também é o mesmo
+                if (actorFindById.get().getName().equalsIgnoreCase(actor.getName())) {
+                    // Se encontrou pelo ID, utiliza o ator encontrado
+                    updatedActors.add(actorFindById.get());
+                } else {
+                    // verificar no banco se existe algum ator com esse nome
+                    actorFindByName = actorService.searchByName(actor.getName());
+
+                    if (actorFindByName.isPresent()) {
+                        updatedActors.add(actorFindByName.get());
+                    } else {
+                        actor.setIdActor(null);
+                        Actor newActor = actorService.add(actor); // Michael caine deu erro aqui
+                        updatedActors.add(newActor);
+                    }
+                }
+
+            } else if (actorFindByName.isPresent()) {
+                // Se encontrou pelo nome, utiliza o ator encontrado
+                updatedActors.add(actorFindByName.get());
+            } else {
+                // Novo ator, persistir no banco de dados
+                actor.setIdActor(null);
+                Actor newActor = actorService.add(actor);
+                updatedActors.add(newActor);
+            }
+        }
+
+        // Atualiza a lista de atores do filme
+        movie.setActors(updatedActors);
+
+        // Salva o filme e retorna o resultado
+        return repository.save(movie);
+    }
+
+    @Override
     public Movie update(Movie movie) {
 
         userService.searchById(movie.getUser().getIdUser()); // se passar, existe o usuário
@@ -132,10 +219,12 @@ public class MovieServiceImpl implements MovieService {
         return repository.save(movie);
     }
 
+
     @Transactional(readOnly = false)
     @Override
     public void deleteById(Long idMovie) {
         searchById(idMovie);
+        repository.deleteSessionMovie(idMovie); // remove relação da tabela session_movie antes de deletar o filme
         repository.deleteById(idMovie);
     }
 

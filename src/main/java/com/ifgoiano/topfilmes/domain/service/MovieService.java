@@ -8,6 +8,7 @@ import java.util.List;
 public interface MovieService {
 
     public Movie add(Movie movie, MultipartFile cover, MultipartFile trailer);
+    public Movie update(Movie movie, MultipartFile cover, MultipartFile trailer);
     public Movie update(Movie movie);
     public void deleteById(Long idFilme);
     public List<Movie> listAll();
