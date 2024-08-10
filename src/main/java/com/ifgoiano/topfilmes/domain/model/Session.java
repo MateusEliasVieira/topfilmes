@@ -28,7 +28,7 @@ public class Session {
     private int tickets;
     private int room;
     @Column(unique = true)
-    private int codSession;
+    private Long codSession;
 
     // Relacionamentos
 
@@ -48,7 +48,6 @@ public class Session {
     )
     private List<Cinema> cinemas = new ArrayList<>();
 
-    // Relaciona mas não retorna no json
 
     @ManyToOne
     @JoinColumn

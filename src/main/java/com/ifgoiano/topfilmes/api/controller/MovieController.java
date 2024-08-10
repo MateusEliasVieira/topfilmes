@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ifgoiano.topfilmes.api.dto.movie.MovieRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.movie.MovieWithTrailerResponseDTO;
 import com.ifgoiano.topfilmes.api.mapper.MovieMapper;
 import com.ifgoiano.topfilmes.domain.domainException.BusinessRulesException;
 import com.ifgoiano.topfilmes.domain.model.Movie;
@@ -51,17 +52,18 @@ public class MovieController {
     }
 
     @GetMapping("/list/id/{idMovie}")
-    @Operation(summary = "Busca filme por ID", description = "Busca um filme específico por seu ID", method = "GET", responses = {
+    @Operation(summary = "Busca filme por ID", description = "Busca um filme específico por seu ID e trás o trailer junto!", method = "GET", responses = {
             @ApiResponse(description = "Filme encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Filme não encontrado!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    public ResponseEntity<MovieResponseDTO> getMovieById(@PathVariable("idMovie") Long idMovie) {
+    public ResponseEntity<MovieWithTrailerResponseDTO> getMovieById(@PathVariable("idMovie") Long idMovie) {
         // Busca o filme pelo ID
         Movie movieEntity = service.searchById(idMovie);
         if (movieEntity == null) {
             return ResponseEntity.notFound().build();
         }
-        MovieResponseDTO movie = MovieMapper.convertMovieEntityToMovieResponseDTO(movieEntity);
+
+        MovieWithTrailerResponseDTO movie = MovieMapper.convertMovieEntityToMovieWithTrailerResponseDTO(movieEntity);
 
         // Cria um link para o próprio filme
         Link selfLink = linkTo(methodOn(MovieController.class).getMovieById(idMovie)).withSelfRel();
@@ -83,17 +85,18 @@ public class MovieController {
     }
 
     @GetMapping("/list/title/{title}")
-    @Operation(summary = "Busca filme por nome", description = "Busca um filme específico por seu nome", method = "GET", responses = {
+    @Operation(summary = "Busca filme por nome", description = "Busca um filme específico por seu nome e trás seus dados e também seu trailer", method = "GET", responses = {
             @ApiResponse(description = "Filme encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
             @ApiResponse(description = "Filme não encontrado!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
-    public ResponseEntity<MovieResponseDTO> getMovieByTitle(@PathVariable("title") String title) {
+    public ResponseEntity<MovieWithTrailerResponseDTO> getMovieByTitle(@PathVariable("title") String title) {
         // Busca o filme pelo ID
         Movie movieEntity = service.searchByTitle(title);
         if (movieEntity == null) {
             return ResponseEntity.notFound().build();
         }
-        MovieResponseDTO movie = MovieMapper.convertMovieEntityToMovieResponseDTO(movieEntity);
+
+        MovieWithTrailerResponseDTO movie = MovieMapper.convertMovieEntityToMovieWithTrailerResponseDTO(movieEntity);
 
         // Cria um link para o próprio filme
         Link selfLink = linkTo(methodOn(MovieController.class).getMovieByTitle(title)).withSelfRel();
@@ -137,23 +140,16 @@ public class MovieController {
         return ResponseEntity.ok(moviesResponseDTO);
     }
 
-    @Operation(summary = "Trailer download", description = "Faz download do trailer de um filme", method = "GET", responses = {
-            @ApiResponse(description = "Filme encontrado com sucesso!", responseCode = "200", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE, schema = @Schema(implementation = MovieResponseDTO.class))),
-            @ApiResponse(description = "Filme não encontrado!", responseCode = "404", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
-    })
-    @GetMapping("/download/{id}/{fileType}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Long id, @PathVariable String fileType) {
+    @GetMapping("/download/trailer/{id}")
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Long id) {
 
         byte[] fileData;
         String fileName;
 
-        if ("trailer".equalsIgnoreCase(fileType)) {
-            Movie movie = service.searchById(id);
-            fileData = movie.getTrailer();
-            fileName = "TRAILER_" + movie.getTitle().replace(" ", "_").trim() + ".mp4";
-        } else {
-            throw new BusinessRulesException("Não foi possível realizar o download do trailer do filme!");
-        }
+        Movie movie = service.searchById(id);
+        fileData = movie.getTrailer();
+        fileName = "TRAILER_" + movie.getTitle().replace(" ", "_").trim() + ".mp4";
+
 
         ByteArrayResource resource = new ByteArrayResource(fileData);
 

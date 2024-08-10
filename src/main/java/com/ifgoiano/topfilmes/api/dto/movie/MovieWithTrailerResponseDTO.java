@@ -3,11 +3,7 @@ package com.ifgoiano.topfilmes.api.dto.movie;
 import com.ifgoiano.topfilmes.api.dto.actor.ActorResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.avaliation.AvaliationResponseDTO;
 import com.ifgoiano.topfilmes.api.dto.comment.CommentResponseDTO;
-import com.ifgoiano.topfilmes.api.dto.list.ListResponseDTO;
-import com.ifgoiano.topfilmes.api.dto.session.SessionResponseDTO;
-import com.ifgoiano.topfilmes.api.dto.user.UserResponseDTO;
 import com.ifgoiano.topfilmes.domain.enums.Gender;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieResponseDTO extends RepresentationModel<MovieResponseDTO> {
+public class MovieWithTrailerResponseDTO extends RepresentationModel<MovieWithTrailerResponseDTO> {
 
     private Long idMovie;
     private String title;
@@ -33,7 +29,7 @@ public class MovieResponseDTO extends RepresentationModel<MovieResponseDTO> {
     private int classification;
     private String distributor;
     private byte[] cover;
-//    private byte[] trailer;
+    private byte[] trailer;
 
     private List<ActorResponseDTO> actors;
     private List<CommentResponseDTO> comments;

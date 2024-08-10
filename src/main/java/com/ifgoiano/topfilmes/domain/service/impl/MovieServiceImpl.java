@@ -77,19 +77,30 @@ public class MovieServiceImpl implements MovieService {
                 actorFindById = actorService.searchById(actor.getIdActor());
             }
 
-            if (!actorFindById.isPresent()) {
-                // Se o ator não foi encontrado pelo ID, busca pelo nome
-                actorFindByName = actorService.searchByName(actor.getName());
-            }
-
             if (actorFindById.isPresent()) {
-                // Se encontrou pelo ID, utiliza o ator encontrado
-                updatedActors.add(actorFindById.get());
+                // verificar se o nome também é o mesmo
+                if (actorFindById.get().getName().equalsIgnoreCase(actor.getName())) {
+                    // Se encontrou pelo ID, utiliza o ator encontrado
+                    updatedActors.add(actorFindById.get());
+                } else {
+                    // verificar no banco se existe algum ator com esse nome
+                    actorFindByName = actorService.searchByName(actor.getName());
+
+                    if (actorFindByName.isPresent()) {
+                        updatedActors.add(actorFindByName.get());
+                    } else {
+                        actor.setIdActor(null);
+                        Actor newActor = actorService.add(actor); // Michael caine deu erro aqui
+                        updatedActors.add(newActor);
+                    }
+                }
+
             } else if (actorFindByName.isPresent()) {
                 // Se encontrou pelo nome, utiliza o ator encontrado
                 updatedActors.add(actorFindByName.get());
             } else {
                 // Novo ator, persistir no banco de dados
+                actor.setIdActor(null);
                 Actor newActor = actorService.add(actor);
                 updatedActors.add(newActor);
             }
@@ -167,7 +178,7 @@ public class MovieServiceImpl implements MovieService {
             throw new BusinessRulesException("Informe o id do filme para realizar a conculta!");
 
         return repository.findById(idMovie).orElseThrow(() -> {
-            throw new BusinessRulesException("Não foi encontrado o filme!");
+            throw new BusinessRulesException("Não foi encontrado o filme com id " + idMovie + "!");
         });
 
     }

@@ -7,3 +7,8 @@ INSERT INTO cinema (name, address, operation, rooms, cnpj, user_id_user) VALUES
                                                                              ('Cineplex Brasil', 'Avenida Atlântica, 555, Fortaleza, CE', '11:00 - 22:00', 5, '93.165.421/0001-53', 1),
                                                                              ('Cinemas Estrela', 'Rua das Acácias, 222, Belo Horizonte, MG', '12:00 - 23:00', 9, '04.461.097/0001-90', 1),
                                                                              ('MovieLand', 'Avenida Independência, 100, Recife, PE', '10:30 - 23:30', 7, '49.248.252/0001-23', 1);
+
+
+
+
+

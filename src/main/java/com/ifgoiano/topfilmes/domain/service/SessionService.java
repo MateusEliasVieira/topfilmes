@@ -12,6 +12,7 @@ public interface SessionService {
     public List<Session> listAll();
 
     public Session searchById(Long idSession);
+    public Session searchByCodSession(Long codSession);
 
     public void deleteById(Long idSession);
 }

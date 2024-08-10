@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -31,4 +33,6 @@ public class CinemaRequestDTO {
 
     @NotNull
     private UserIDRequestDTO user; // Informa apenas o id do usuário de referência
+
+
 }

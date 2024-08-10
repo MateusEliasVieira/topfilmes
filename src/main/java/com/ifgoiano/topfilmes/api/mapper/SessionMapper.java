@@ -15,7 +15,7 @@ public class SessionMapper {
         return modelMapper.map(sessionRequestDTO, Session.class);
     }
 
-    public static SessionResponseDTO convertCinemaEntityToCinemaResponseDTO(Session session) {
+    public static SessionResponseDTO convertSessionEntityToSessionResponseDTO(Session session) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(session, SessionResponseDTO.class);
     }

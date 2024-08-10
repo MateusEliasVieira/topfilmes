@@ -1,6 +1,8 @@
 package com.ifgoiano.topfilmes.api.dto.session;
 
 import com.ifgoiano.topfilmes.api.dto.cinema.CinemaIDRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.cinema.CinemaRequestDTO;
+import com.ifgoiano.topfilmes.api.dto.movie.MovieIDRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.user.UserIDRequestDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,9 +29,12 @@ public class SessionRequestDTO {
     @NotNull
     private int room;
     @NotNull
-    private int codSession;
+    private Long codSession;
 
     @NotNull
     private UserIDRequestDTO user;
-
+    @NotNull
+    private List<MovieIDRequestDTO> movies;
+    @NotNull
+    private List<CinemaIDRequestDTO> cinemas;
 }

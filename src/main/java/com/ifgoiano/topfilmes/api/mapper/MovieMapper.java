@@ -2,6 +2,7 @@ package com.ifgoiano.topfilmes.api.mapper;
 
 import com.ifgoiano.topfilmes.api.dto.movie.MovieRequestDTO;
 import com.ifgoiano.topfilmes.api.dto.movie.MovieResponseDTO;
+import com.ifgoiano.topfilmes.api.dto.movie.MovieWithTrailerResponseDTO;
 import com.ifgoiano.topfilmes.domain.model.Movie;
 import org.modelmapper.ModelMapper;
 
@@ -19,6 +20,11 @@ public class MovieMapper {
     public static MovieResponseDTO convertMovieEntityToMovieResponseDTO(Movie movie){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(movie, MovieResponseDTO.class);
+    }
+
+    public static MovieWithTrailerResponseDTO convertMovieEntityToMovieWithTrailerResponseDTO(Movie movie){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(movie, MovieWithTrailerResponseDTO.class);
     }
 
     public static List<MovieResponseDTO> convertListMovieEntityToListMovieResponseDTO(List<Movie> listMovie) {
