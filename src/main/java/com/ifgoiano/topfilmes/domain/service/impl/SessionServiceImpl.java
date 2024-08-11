@@ -42,7 +42,7 @@ public class SessionServiceImpl implements SessionService {
         if (session.getUser().getIdUser() == null)
             throw new BusinessRulesException("Informe o id do usuário!");
 
-        if(session.getMovies().isEmpty())
+        if (session.getMovies().isEmpty())
             throw new BusinessRulesException("Informe o(s) filme(s) para esta sessão!");
 
         if (session.getCinemas().isEmpty())
@@ -59,17 +59,18 @@ public class SessionServiceImpl implements SessionService {
                             throw new BusinessRulesException("O cinema " + cinema_exist.getName() + " já foi adicionado a esta sessão!");
                         }
                     });
+
                     cinemaRepository.findById(cinema.getIdCinema()) // se passar é porque existe o cinema
-                            .orElseThrow(()->{
-                                throw new BusinessRulesException("Não existe o cinema com id "+cinema.getIdCinema());
+                            .orElseThrow(() -> {
+                                throw new BusinessRulesException("Não existe o cinema com id " + cinema.getIdCinema());
                             });
                     session_exist.get().getCinemas().add(cinema);
                 });
                 // adiciona os filmes para sessão existente
                 session.getMovies().forEach((movie) -> {
-                    session_exist.get().getMovies().forEach((movie_exist)->{
-                        if(movie_exist.getIdMovie() == movie.getIdMovie()){
-                            throw new BusinessRulesException("O filme "+movie_exist.getTitle()+" já esta adicionado a essa sessão!");
+                    session_exist.get().getMovies().forEach((movie_exist) -> {
+                        if (movie_exist.getIdMovie() == movie.getIdMovie()) {
+                            throw new BusinessRulesException("O filme " + movie_exist.getTitle() + " já esta adicionado a essa sessão!");
                         }
                     });
                     movieService.searchById(movie.getIdMovie()); // se passar é porque existe o filme
@@ -81,10 +82,24 @@ public class SessionServiceImpl implements SessionService {
             } else {
                 throw new BusinessRulesException("O usuário " + user.getName() + " não pode adicionar o filme e cinema a esta sessão, pois ela foi criada pelo usuário " + session_exist.get().getUser().getName() + "!");
             }
+        } else {
+            // verificar se o(s) filme(s) existe(m)
+            session.getMovies().forEach((movie_exist) -> {
+                movieService.searchById(movie_exist.getIdMovie()); // se passar é porque existe
+            });
+
+            // verificar se o(s) cinema(s) existe(m)
+            session.getCinemas().forEach((cinema_exist) -> {
+                cinemaRepository.findById(cinema_exist.getIdCinema())
+                        .orElseThrow(() -> {
+                            throw new BusinessRulesException("Não existe nenhum cinema com id " + cinema_exist.getIdCinema() + "!");
+                        });
+            });
         }
 
         // salva uma nova sessão
-        return repository.save(session);
+        Session session_saved = repository.save(session);
+        return searchById(session_saved.getIdSession());
     }
 
     @Transactional(readOnly = false)
@@ -114,7 +129,9 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session searchByCodSession(Long codSession) {
-        return repository.findByCodSession(codSession).orElseThrow(()->{throw new BusinessRulesException("Não foi encontrado nenhuma sessão com código "+codSession+"!");});
+        return repository.findByCodSession(codSession).orElseThrow(() -> {
+            throw new BusinessRulesException("Não foi encontrado nenhuma sessão com código " + codSession + "!");
+        });
     }
 
     @Transactional(readOnly = false)
